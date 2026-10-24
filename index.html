@@ -1,0 +1,1916 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1F5C3A">
+<meta name="description" content="Rychlý zápis gólů, karet a statistik fotbalových zápasů.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Góly">
+<title>Góly – zápis gólů</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+@font-face{font-family:'Barlow';font-style:normal;font-display:swap;font-weight:400;src:url(fonts/barlow-latin-ext-400-normal.woff2) format('woff2');unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Barlow';font-style:normal;font-display:swap;font-weight:400;src:url(fonts/barlow-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Barlow';font-style:normal;font-display:swap;font-weight:500;src:url(fonts/barlow-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Barlow';font-style:normal;font-display:swap;font-weight:500;src:url(fonts/barlow-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Barlow';font-style:normal;font-display:swap;font-weight:600;src:url(fonts/barlow-latin-ext-600-normal.woff2) format('woff2');unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Barlow';font-style:normal;font-display:swap;font-weight:600;src:url(fonts/barlow-latin-600-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Barlow';font-style:normal;font-display:swap;font-weight:700;src:url(fonts/barlow-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Barlow';font-style:normal;font-display:swap;font-weight:700;src:url(fonts/barlow-latin-700-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-display:swap;font-weight:600;src:url(fonts/barlow-condensed-latin-ext-600-normal.woff2) format('woff2');unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-display:swap;font-weight:600;src:url(fonts/barlow-condensed-latin-600-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-display:swap;font-weight:700;src:url(fonts/barlow-condensed-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-display:swap;font-weight:700;src:url(fonts/barlow-condensed-latin-700-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+:root {
+  --bg: #F3F5EF; --surface: #FBFCF8; --surface-2: #E6EBE2; --line: #D3DACE;
+  --ink: #16201A; --muted: #56625A; --faint: #8A958C;
+  --turf: #1F5C3A; --turf-ink: #FFFFFF; --turf-soft: #CDEFD7; --turf-soft-ink: #0C3B21; --turf-text: #1F5C3A;
+  --slate: #3E5770; --slate-soft: #D6E3F1; --slate-soft-ink: #14283D;
+  --board: #14231B; --digits: #F2C94C; --over: #FF8A65;
+  --danger: #B3261E; --win: #2E7D32; --draw: #7A847C; --yc: #F4C20D; --rc: #D32F2F;
+  --top-bg: rgba(243, 245, 239, 0.92);
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1511; --surface: #161E18; --surface-2: #1F2921; --line: #2D3A30;
+    --ink: #E2E9E2; --muted: #A2AEA5; --faint: #77837A;
+    --turf: #2F7D52; --turf-ink: #FFFFFF; --turf-soft: #173D27; --turf-soft-ink: #BFEBCC; --turf-text: #8FD5A6;
+    --slate: #9FB9D6; --slate-soft: #26384B; --slate-soft-ink: #D6E3F1;
+    --board: #0A120D; --danger: #FFB4AB; --draw: #8E998F;
+    --top-bg: rgba(15, 21, 17, 0.92);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1511; --surface: #161E18; --surface-2: #1F2921; --line: #2D3A30;
+  --ink: #E2E9E2; --muted: #A2AEA5; --faint: #77837A;
+  --turf: #2F7D52; --turf-ink: #FFFFFF; --turf-soft: #173D27; --turf-soft-ink: #BFEBCC; --turf-text: #8FD5A6;
+  --slate: #9FB9D6; --slate-soft: #26384B; --slate-soft-ink: #D6E3F1;
+  --board: #0A120D; --danger: #FFB4AB; --draw: #8E998F;
+  --top-bg: rgba(15, 21, 17, 0.92);
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: inherit; }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 16px/1.45 'Barlow', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--top-bg); }
+body.locked { overflow: hidden; }
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--turf-text); outline-offset: 2px; }
+svg { flex: none; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+h1, h2, p { margin: 0; }
+
+/* ---------- horní lišta ---------- */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--top-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.top-in { max-width: 600px; margin: 0 auto; display: flex; align-items: center; gap: 4px; min-height: 56px; padding: 0 8px; }
+.top-pad { width: 8px; }
+.top-title { flex: 1; min-width: 0; font: 700 22px/1.1 'Barlow Condensed', 'Arial Narrow', sans-serif; letter-spacing: 0.01em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.top-act { display: flex; align-items: center; gap: 2px; }
+
+/* ---------- rozvržení ---------- */
+.wrap { max-width: 600px; margin: 0 auto; padding: 14px 16px 32px; }
+.stack > * + * { margin-top: 14px; }
+.has-fab { padding-bottom: 104px; }
+.has-bar { padding-bottom: 112px; }
+section > * + * { margin-top: 8px; }
+.sec { font: 700 19px/1.2 'Barlow Condensed', 'Arial Narrow', sans-serif; color: var(--turf-text); margin-top: 10px; }
+.hint, .meta { color: var(--muted); font-size: 14px; }
+.meta { text-align: center; }
+.warn { color: var(--danger); font-weight: 600; }
+.ok { color: var(--turf-text); font-size: 14px; }
+.muted { color: var(--faint); }
+.strong { font-weight: 600; }
+.pre { white-space: pre-wrap; }
+.foot { color: var(--muted); font-size: 13px; text-align: center; padding-top: 8px; }
+.between { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grow { flex: 1; }
+.empty { padding: 48px 16px; text-align: center; color: var(--muted); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+.pad { padding: 14px 16px; }
+.tag { font-size: 12px; font-weight: 600; color: var(--turf-soft-ink); background: var(--turf-soft); padding: 1px 8px; border-radius: 99px; vertical-align: 2px; }
+
+/* ---------- tlačítka ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 99px; border: 0; font-weight: 600; background: none; text-decoration: none; }
+.btn:disabled { opacity: 0.45; cursor: default; }
+.btn svg { width: 20px; height: 20px; }
+.btn-primary { background: var(--turf); color: var(--turf-ink); }
+.btn-tonal { background: var(--turf-soft); color: var(--turf-soft-ink); }
+.btn-outline { border: 1.5px solid var(--line); color: var(--ink); background: var(--surface); }
+.btn-text { color: var(--turf-text); padding: 0 12px; }
+.btn-danger { background: var(--danger); color: #fff; }
+:root[data-theme="dark"] .btn-danger { color: #3a0907; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn-danger { color: #3a0907; } }
+.danger { color: var(--danger) !important; }
+.btn-l { min-height: 52px; width: 100%; font-size: 17px; }
+.btn-xl { min-height: 62px; width: 100%; font-size: 19px; border-radius: 18px; }
+.btn-xl svg { width: 26px; height: 26px; }
+.center { display: flex; margin-left: auto; margin-right: auto; }
+.icon-btn { width: 44px; height: 44px; border: 0; border-radius: 99px; background: none; display: inline-grid; place-items: center; color: var(--ink); }
+.icon-btn:active, .btn:active, .tile:active, .row[role="button"]:active { transform: scale(0.98); }
+.btn-round { width: 44px; height: 44px; border-radius: 99px; border: 0; background: var(--surface-2); font-size: 22px; font-weight: 600; }
+.btn-round:disabled { opacity: 0.4; }
+.fab { position: fixed; right: 16px; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); z-index: 15; display: inline-flex; align-items: center; gap: 8px; height: 56px; padding: 0 20px 0 16px; border-radius: 18px; border: 0; background: var(--turf); color: var(--turf-ink); font-weight: 600; box-shadow: 0 6px 18px rgba(20, 35, 27, 0.28); }
+@media (min-width: 640px) { .fab { right: calc(50% - 284px); } }
+.bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 15; background: var(--top-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--line); padding: 12px max(16px, calc(50% - 284px)) calc(12px + env(safe-area-inset-bottom, 0px)); }
+.bar.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.saved { display: inline-flex; align-items: center; justify-content: center; gap: 6px; color: var(--turf-text); font-weight: 600; }
+
+/* ---------- dlaždice ---------- */
+.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.tile { display: flex; align-items: center; gap: 10px; min-height: 60px; padding: 10px 14px; border: 0; border-radius: 16px; background: var(--surface-2); text-align: left; font-weight: 600; line-height: 1.2; }
+.tile svg { color: var(--turf-text); }
+.tile:disabled { opacity: 0.45; }
+
+/* ---------- seznamy ---------- */
+.list { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.list + .list { margin-top: 10px; }
+.row { display: flex; align-items: center; gap: 12px; padding: 11px 14px; min-height: 56px; }
+.list .row + .row { border-top: 1px solid var(--line); }
+.row[role="button"] { cursor: pointer; }
+.row-lead { flex: none; display: grid; place-items: center; min-width: 32px; }
+.row-main { flex: 1; min-width: 0; }
+.row-over { font-size: 12px; color: var(--muted); }
+.row-head { overflow-wrap: anywhere; }
+.row-sub { font-size: 14px; color: var(--muted); }
+.row-trail { flex: none; display: flex; align-items: center; gap: 6px; color: var(--muted); }
+.row.card { background: var(--surface); }
+.season-card .row-head { font: 700 20px/1.2 'Barlow Condensed', 'Arial Narrow', sans-serif; }
+.ev.theirs { background: color-mix(in srgb, var(--surface-2) 45%, var(--surface)); }
+.minute { font: 700 18px/1 'Barlow Condensed', 'Arial Narrow', sans-serif; font-variant-numeric: tabular-nums; min-width: 46px; text-align: left; }
+.score-sm { font: 700 18px/1 'Barlow Condensed', 'Arial Narrow', sans-serif; font-variant-numeric: tabular-nums; color: var(--ink); }
+.big-num { font: 700 22px/1 'Barlow Condensed', 'Arial Narrow', sans-serif; color: var(--ink); }
+.blank { display: inline-block; width: 7em; border-bottom: 2px solid var(--faint); height: 1em; vertical-align: -2px; }
+.note-line { color: var(--muted); font-style: italic; }
+.badge { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 99px; font-size: 13px; font-weight: 700; color: #fff; }
+.badge.win { background: var(--win); } .badge.loss { background: var(--rc); } .badge.draw { background: var(--draw); }
+.badge.live-b { background: none; color: var(--slate); font-size: 16px; }
+.jersey { display: inline-grid; place-items: center; width: 38px; height: 38px; border-radius: 99px; background: var(--turf-soft); color: var(--turf-soft-ink); font: 700 18px/1 'Barlow Condensed', 'Arial Narrow', sans-serif; }
+.rankno { font-weight: 700; color: var(--turf-text); }
+.cardicon { display: inline-block; width: 11px; height: 15px; border-radius: 2px; background: var(--yc); vertical-align: -2px; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12); }
+.cardicon.red { background: var(--rc); }
+.cardicon.big { width: 18px; height: 24px; border-radius: 3px; }
+.cards .cardicon + .cardicon { margin-left: 4px; }
+.cardcount { display: inline-flex; align-items: center; gap: 4px; min-width: 40px; font-weight: 600; color: var(--ink); }
+.check { width: 24px; height: 24px; border-radius: 6px; border: 2px solid var(--faint); display: grid; place-items: center; }
+.check.on { background: var(--turf); border-color: var(--turf); color: var(--turf-ink); }
+.check svg { width: 18px; height: 18px; }
+.numbtn { min-width: 64px; height: 38px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--surface); font-weight: 600; }
+.numbtn.changed { background: var(--turf-soft); color: var(--turf-soft-ink); border-color: transparent; }
+.radio { width: 24px; height: 24px; border-radius: 99px; border: 2px solid var(--faint); background: none; padding: 0; position: relative; }
+.radio.on { border-color: var(--turf-text); }
+.radio.on::after { content: ""; position: absolute; inset: 4px; border-radius: 99px; background: var(--turf-text); }
+
+/* ---------- formuláře ---------- */
+.field { display: block; }
+.field > span { display: block; font-size: 14px; color: var(--muted); margin-bottom: 4px; }
+.field input, .field textarea, .copy-area { width: 100%; min-height: 50px; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--surface); font-size: 17px; }
+.field textarea, .copy-area { min-height: 0; resize: vertical; }
+.field input:focus, .field textarea:focus { border-color: var(--turf-text); outline: none; }
+.chips { display: flex; gap: 8px; overflow-x: auto; padding: 2px 0; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chip { flex: none; min-height: 40px; padding: 0 16px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--surface); font-weight: 600; max-width: 75vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chip.on { background: var(--turf-soft); color: var(--turf-soft-ink); border-color: transparent; }
+.filters > * + * { margin-top: 8px; }
+.stepper { display: flex; align-items: center; gap: 8px; min-height: 52px; }
+.stepper-label { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.stepper-val { min-width: 70px; text-align: center; font: 700 24px/1 'Barlow Condensed', 'Arial Narrow', sans-serif; font-variant-numeric: tabular-nums; }
+.switch-row, .check-row { display: flex; align-items: center; gap: 12px; padding: 4px 0; cursor: pointer; }
+.switch-row > span { flex: 1; }
+.switch-row small { color: var(--muted); }
+.check-row input { width: 22px; height: 22px; accent-color: var(--turf); }
+.switch { appearance: none; -webkit-appearance: none; flex: none; width: 52px; height: 32px; border-radius: 99px; background: var(--surface-2); border: 2px solid var(--faint); position: relative; transition: background 0.15s; }
+.switch::after { content: ""; position: absolute; top: 4px; left: 4px; width: 20px; height: 20px; border-radius: 99px; background: var(--faint); transition: transform 0.15s; }
+.switch:checked { background: var(--turf); border-color: var(--turf); }
+.switch:checked::after { transform: translateX(20px); background: #fff; }
+.expander { width: 100%; display: flex; align-items: center; justify-content: space-between; min-height: 52px; padding: 0 16px; border: 0; border-radius: 14px; background: var(--surface-2); color: var(--turf-text); font: 700 18px/1 'Barlow Condensed', 'Arial Narrow', sans-serif; }
+.info { padding: 4px 8px 4px 16px; }
+.info-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 6px 0; }
+.info-row + .info-row { border-top: 1px solid var(--line); }
+.info-row > div { flex: 1; min-width: 0; }
+.info-row input[type="date"] { border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 10px; background: var(--surface); min-height: 44px; }
+.lbl { display: block; font-size: 13px; color: var(--muted); }
+
+/* ---------- výsledková tabule ---------- */
+.board { background: var(--board); color: #fff; border-radius: 22px; padding: 16px 14px 18px; text-align: center; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04); }
+.board.small { padding: 12px; border-radius: 16px; }
+.board-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; }
+.bt { display: flex; flex-direction: column; text-align: left; min-width: 0; }
+.bt.end { text-align: right; }
+.bt-name { font-weight: 500; color: rgba(255, 255, 255, 0.72); overflow-wrap: anywhere; line-height: 1.2; }
+.bt.ours .bt-name { font-weight: 700; color: #fff; }
+.bt-role { font-size: 12px; color: rgba(255, 255, 255, 0.45); }
+.digits { font: 700 68px/0.95 'Barlow Condensed', 'Arial Narrow', sans-serif; color: var(--digits); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; text-shadow: 0 0 22px rgba(242, 201, 76, 0.28); }
+.board.small .digits { font-size: 44px; }
+.colon { display: inline-block; margin: 0 0.06em; transform: translateY(-0.06em); }
+.board-sub { margin-top: 6px; color: rgba(255, 255, 255, 0.72); font-variant-numeric: tabular-nums; }
+.clock { margin-top: 12px; padding-top: 12px; border-top: 1px dashed rgba(255, 255, 255, 0.14); }
+.clock-status { font-size: 15px; color: rgba(255, 255, 255, 0.62); }
+.clock-time { font: 700 78px/0.95 'Barlow Condensed', 'Arial Narrow', sans-serif; color: var(--digits); font-variant-numeric: tabular-nums; }
+.clock-sub { font-size: 14px; color: rgba(255, 255, 255, 0.55); }
+.clock.over .clock-time, .clock.over .clock-sub { color: var(--over); }
+.record .rec-played { color: rgba(255, 255, 255, 0.7); font-size: 17px; }
+.record .rec-wdl { font-size: 17px; font-weight: 600; }
+.live { background: var(--turf-soft); border-radius: 20px; padding: 10px; cursor: pointer; }
+.live-label { color: var(--turf-soft-ink); font-weight: 600; font-size: 14px; padding: 2px 6px 8px; }
+.small-rec { display: flex; flex-direction: column; gap: 2px; }
+.sr-score { font: 700 28px/1 'Barlow Condensed', 'Arial Narrow', sans-serif; }
+
+/* ---------- zápas ---------- */
+.match .goals { grid-template-columns: 1fr 1fr; }
+.goal-btn { min-height: 96px; border: 0; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 8px; min-width: 0; }
+.goal-btn b { font: 700 34px/1 'Barlow Condensed', 'Arial Narrow', sans-serif; letter-spacing: 0.04em; }
+.goal-btn span { font-weight: 600; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.goal-btn.ours { background: var(--turf); color: var(--turf-ink); }
+.goal-btn.theirs { background: var(--slate-soft); color: var(--slate-soft-ink); }
+.goal-btn:active { transform: scale(0.97); }
+.pitch2 { width: 100%; display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 16px; border: 0; border-radius: 14px; background: var(--surface-2); }
+.pitch2 span { flex: 1; text-align: left; font-weight: 600; }
+.pitch2 b { font: 700 24px/1 'Barlow Condensed', 'Arial Narrow', sans-serif; }
+.pitch2 em { font-style: normal; color: var(--turf-text); font-weight: 600; }
+
+/* ---------- tabulka ---------- */
+.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+table.stats { width: 100%; border-collapse: collapse; }
+.stats th { font-size: 13px; font-weight: 600; color: var(--muted); text-align: center; padding: 10px 6px; border-bottom: 1px solid var(--line); }
+.stats th:nth-child(2) { text-align: left; }
+.stats td { padding: 10px 6px; text-align: center; border-top: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+.stats tr:first-child td { border-top: 0; }
+.stats td:nth-child(2) { text-align: left; }
+.stats .rank { width: 34px; color: var(--muted); padding-left: 12px; }
+.stats td.g { font: 700 19px/1 'Barlow Condensed', 'Arial Narrow', sans-serif; color: var(--turf-text); }
+.stats .pn { display: block; }
+.stats .pt { display: block; font-size: 12px; color: var(--muted); }
+.stats tr.inactive td { color: var(--faint); }
+
+/* ---------- kalendář ---------- */
+.cal-head { display: flex; align-items: center; justify-content: space-between; }
+.cal-head h2 { font: 700 24px/1 'Barlow Condensed', 'Arial Narrow', sans-serif; }
+.cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.wd { text-align: center; font-size: 13px; color: var(--muted); padding: 4px 0; }
+.day { aspect-ratio: 1; border: 0; border-radius: 12px; background: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 0; font-variant-numeric: tabular-nums; }
+.day.pad { visibility: hidden; }
+.day.has { background: var(--turf-soft); color: var(--turf-soft-ink); font-weight: 700; }
+.day.today { box-shadow: inset 0 0 0 2px var(--turf-text); }
+.day.sel { background: var(--turf); color: var(--turf-ink); }
+.dots { display: flex; gap: 3px; min-height: 7px; }
+.dot { display: inline-block; width: 7px; height: 7px; border-radius: 99px; background: var(--draw); }
+.dot.win { background: var(--win); } .dot.loss { background: var(--rc); } .dot.live { background: var(--slate); }
+.day.sel .dot { background: #fff; }
+.legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; font-size: 13px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+
+/* ---------- dialogy ---------- */
+.scrim { position: fixed; inset: 0; z-index: 40; background: rgba(10, 18, 13, 0.5); }
+.sheet { position: fixed; z-index: 41; left: 0; right: 0; bottom: 0; max-height: 92vh; max-height: 92dvh; overflow-y: auto; background: var(--surface); border-radius: 24px 24px 0 0; padding: 22px 18px calc(16px + env(safe-area-inset-bottom, 0px)); box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.2); animation: rise 0.18s ease-out; }
+@media (min-width: 640px) { .sheet { left: 50%; right: auto; bottom: auto; top: 50%; width: 520px; transform: translate(-50%, -50%); border-radius: 24px; padding-bottom: 18px; animation: none; } }
+@keyframes rise { from { transform: translateY(24px); opacity: 0.6; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .sheet { animation: none; } * { transition: none !important; } }
+.sheet > * + * { margin-top: 12px; }
+.sheet h2 { font: 700 24px/1.15 'Barlow Condensed', 'Arial Narrow', sans-serif; }
+.sheet h2.with-icon { display: flex; align-items: center; gap: 10px; }
+.sheet-sub { color: var(--muted); margin-top: 2px !important; }
+.sheet-actions { display: flex; align-items: center; gap: 8px; padding-top: 4px; flex-wrap: wrap; }
+.extra-actions { display: flex; flex-direction: column; align-items: flex-start; }
+.pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 8px; max-height: 46vh; overflow-y: auto; padding: 2px; }
+.ptile { min-height: 60px; border: 0; border-radius: 14px; background: var(--surface-2); display: flex; align-items: center; gap: 8px; padding: 8px 10px; text-align: left; font-weight: 600; line-height: 1.15; }
+.ptile b { font: 700 22px/1 'Barlow Condensed', 'Arial Narrow', sans-serif; color: var(--turf-text); min-width: 22px; }
+.ptile.on { background: var(--turf); color: var(--turf-ink); }
+.ptile.on b { color: var(--turf-ink); }
+.numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.np-val { grid-column: 1 / -1; text-align: center; font: 700 40px/1.1 'Barlow Condensed', 'Arial Narrow', sans-serif; font-variant-numeric: tabular-nums; }
+.np-key { min-height: 52px; border: 0; border-radius: 14px; background: var(--surface-2); font-size: 22px; font-weight: 600; }
+.np-key:active { background: var(--turf-soft); }
+
+/* ---------- oznámení ---------- */
+#toast { position: fixed; left: 50%; bottom: calc(96px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); z-index: 60; max-width: calc(100% - 32px); background: var(--ink); color: var(--bg); padding: 12px 18px; border-radius: 14px; font-weight: 500; opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; }
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+</style>
+</head>
+<body>
+<div id="app"></div><div id="modal-root"></div><div id="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+/* =====================================================================
+   Góly – webová verze. Stejná data i formát zálohy jako aplikace pro Android.
+   ===================================================================== */
+
+// ---------------------------------------------------------------- utility
+const $ = (s, r = document) => r.querySelector(s);
+function uid() {
+  try { if (window.crypto && crypto.randomUUID) return crypto.randomUUID(); } catch (e) { /* bez crypto */ }
+  return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+}
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+function plural(n, one, few, many) { return n === 1 ? one : (n >= 2 && n <= 4 ? few : many); }
+const pad2 = n => String(n).padStart(2, '0');
+function formatClock(ms) { const t = Math.max(0, Math.floor(ms / 1000)); return pad2(Math.floor(t / 60)) + ':' + pad2(t % 60); }
+function fmtDate(ms) { const d = new Date(ms); return `${d.getDate()}. ${d.getMonth() + 1}. ${d.getFullYear()}`; }
+function fmtDateTime(ms) { const d = new Date(ms); return `${fmtDate(ms)} ${d.getHours()}:${pad2(d.getMinutes())}`; }
+function dayKey(ms) { const d = new Date(ms); return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`; }
+function fmtDayKey(k) { const [y, m, d] = k.split('-').map(Number); return `${d}. ${m}. ${y}`; }
+/** Den z políčka typu date (RRRR-MM-DD) s časem dne z původního data. */
+function withDay(original, key) {
+  const [y, m, d] = String(key).split('-').map(Number);
+  if (!y || !m || !d) return original;
+  const o = new Date(original);
+  return new Date(y, m - 1, d, o.getHours(), o.getMinutes(), o.getSeconds()).getTime();
+}
+const MONTHS = ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'];
+const collator = (() => { try { return new Intl.Collator('cs'); } catch (e) { return { compare: (a, b) => (a < b ? -1 : a > b ? 1 : 0) }; } })();
+const cmpName = (a, b) => collator.compare(a, b);
+function avg(total, count) { return count ? (total / count).toFixed(1).replace('.', ',') : '0'; }
+function countBy(arr) { const r = Object.create(null); for (const x of arr) r[x] = (r[x] || 0) + 1; return r; }
+const int = v => (Number.isFinite(Number(v)) ? Math.floor(Number(v)) : 0);
+const intOrNull = v => (v === null || v === undefined || v === '' || !Number.isFinite(Number(v)) ? null : Math.floor(Number(v)));
+
+// ---------------------------------------------------------------- data (stejné jako Android)
+const GOAL_TYPES = ['NORMAL', 'PENALTY', 'OWN_GOAL'];
+
+function nPlayer(p) { return { id: p.id || uid(), name: String(p.name || ''), number: intOrNull(p.number) }; }
+function nTeam(t) {
+  return {
+    id: t.id || uid(), name: String(t.name || ''), players: (t.players || []).map(nPlayer),
+    lastCategory: String(t.lastCategory || ''), lastPeriods: int(t.lastPeriods), lastPeriodMinutes: int(t.lastPeriodMinutes),
+  };
+}
+function nSeason(s) {
+  return { id: s.id || uid(), name: String(s.name || ''), teams: (s.teams || []).map(nTeam), archived: !!s.archived, players: (s.players || []).map(nPlayer) };
+}
+function nGoal(g) {
+  return {
+    id: g.id || uid(), ours: !!g.ours, period: int(g.period) || 1, second: Math.max(0, int(g.second)),
+    scorerId: g.scorerId || null, assistId: g.assistId || null,
+    type: GOAL_TYPES.includes(g.type) ? g.type : 'NORMAL', opponentNumber: intOrNull(g.opponentNumber),
+  };
+}
+function nPitchGoal(g) {
+  return { id: g.id || uid(), scorerId: g.scorerId || null, assistId: g.assistId || null, type: GOAL_TYPES.includes(g.type) ? g.type : 'NORMAL', opponentNumber: intOrNull(g.opponentNumber) };
+}
+function nBooking(b) {
+  return {
+    id: b.id || uid(), ours: !!b.ours, color: b.color === 'RED' ? 'RED' : 'YELLOW', period: int(b.period) || 1,
+    second: Math.max(0, int(b.second)), playerId: b.playerId || null, opponentNumber: intOrNull(b.opponentNumber),
+  };
+}
+function nMatch(m) {
+  return {
+    id: m.id || uid(), seasonId: String(m.seasonId || ''), teamId: String(m.teamId || ''), opponent: String(m.opponent || ''),
+    home: m.home !== false, date: int(m.date) || Date.now(), categoryLabel: String(m.categoryLabel || ''),
+    periods: int(m.periods) || 2, periodMinutes: int(m.periodMinutes) || 35, players: (m.players || []).map(nPlayer),
+    note: String(m.note || ''), goals: (m.goals || []).map(nGoal),
+    secondPitch: m.secondPitch ? { ours: Math.max(0, int(m.secondPitch.ours)), theirs: Math.max(0, int(m.secondPitch.theirs)), goals: (m.secondPitch.goals || []).map(nPitchGoal) } : null,
+    cards: (m.cards || []).map(nBooking),
+    status: ['ACTIVE', 'FINISHED', 'ARCHIVED'].includes(m.status) ? m.status : 'ACTIVE',
+    currentPeriod: int(m.currentPeriod) || 1, periodStarted: !!m.periodStarted, periodEnded: !!m.periodEnded,
+    elapsedMs: Math.max(0, int(m.elapsedMs)), runningSince: m.runningSince == null ? null : int(m.runningSince),
+  };
+}
+function nData(d) {
+  d = d || {};
+  return {
+    teamName: String(d.teamName || 'Náš tým'), activeSeasonId: d.activeSeasonId || null, lastTeamId: d.lastTeamId || null,
+    seasons: (d.seasons || []).map(nSeason), matches: (d.matches || []).map(nMatch),
+  };
+}
+
+/** Srovná góly z druhého hřiště s jejich počtem (nejdřív ubírá góly bez střelce). */
+function normalizePitch(sp) {
+  if (!sp) return null;
+  const goals = sp.goals.slice();
+  while (goals.length < sp.ours) goals.push(nPitchGoal({}));
+  while (goals.length > sp.ours) {
+    let idx = -1;
+    for (let i = goals.length - 1; i >= 0; i--) if (!goals[i].scorerId) { idx = i; break; }
+    goals.splice(idx >= 0 ? idx : goals.length - 1, 1);
+  }
+  return { ours: sp.ours, theirs: sp.theirs, goals };
+}
+
+/** Převod starších dat: soupiska v sezóně → tým „Můj tým“. */
+function migrate(d) {
+  for (const s of d.seasons) {
+    const orphan = d.matches.some(m => m.seasonId === s.id && !m.teamId);
+    if (!s.teams.length && (s.players.length || orphan)) {
+      const t = nTeam({ name: 'Můj tým', players: s.players });
+      s.teams = [t];
+      d.matches.forEach(m => { if (m.seasonId === s.id && !m.teamId) m.teamId = t.id; });
+    } else if (orphan) {
+      d.matches.forEach(m => { if (m.seasonId === s.id && !m.teamId) m.teamId = s.teams[0].id; });
+    }
+    s.players = [];
+  }
+  d.matches.forEach(m => { m.secondPitch = normalizePitch(m.secondPitch); });
+  return d;
+}
+
+// ---------------------------------------------------------------- vyhledávání
+function activeSeason(d) {
+  return d.seasons.find(s => s.id === d.activeSeasonId && !s.archived) || d.seasons.slice().reverse().find(s => !s.archived) || null;
+}
+const seasonById = (d, id) => d.seasons.find(s => s.id === id) || null;
+const matchById = (d, id) => d.matches.find(m => m.id === id) || null;
+function teamById(d, sid, tid) { const s = seasonById(d, sid); return s ? s.teams.find(t => t.id === tid) || null : null; }
+function teamLabel(d, m) { const t = teamById(d, m.seasonId, m.teamId); return t ? t.name : ''; }
+const seasonLabel = s => (s.archived ? s.name + ' (archiv)' : s.name);
+
+// ---------------------------------------------------------------- čeština
+function periodWord(p, c) {
+  if (p === 2) return { N: 'poločas', A: 'poločas', G: 'poločasu', L: 'poločase' }[c];
+  if (p === 4) return { N: 'čtvrtina', A: 'čtvrtinu', G: 'čtvrtiny', L: 'čtvrtině' }[c];
+  return { N: 'část', A: 'část', G: 'části', L: 'části' }[c];
+}
+
+// ---------------------------------------------------------------- zápas
+const elapsedAt = (m, now) => m.elapsedMs + (m.runningSince != null ? Math.max(0, now - m.runningSince) : 0);
+const isRunning = m => m.runningSince != null;
+const isLast = m => m.currentPeriod >= m.periods;
+const halfPeriods = m => Math.floor(m.periods / 2);
+const hasHalftime = m => m.periods >= 2;
+const formatLabel = m => `${m.periods}× ${m.periodMinutes} min`;
+const homeName = (m, t) => (m.home ? t : m.opponent);
+const awayName = (m, t) => (m.home ? m.opponent : t);
+const pitchGoals = m => (m.secondPitch ? m.secondPitch.goals : []);
+const mainOur = m => m.goals.filter(g => g.ours).length;
+const mainTheir = m => m.goals.filter(g => !g.ours).length;
+const ourGoals = m => mainOur(m) + (m.secondPitch ? m.secondPitch.ours : 0);
+const theirGoals = m => mainTheir(m) + (m.secondPitch ? m.secondPitch.theirs : 0);
+const toHA = (m, o, t) => (m.home ? [o, t] : [t, o]);
+const score = m => toHA(m, ourGoals(m), theirGoals(m));
+const mainScore = m => toHA(m, mainOur(m), mainTheir(m));
+const secondScore = m => (m.secondPitch ? toHA(m, m.secondPitch.ours, m.secondPitch.theirs) : null);
+function pitchesLine(m) {
+  const s = secondScore(m); if (!s) return null;
+  const [a, b] = mainScore(m);
+  return `Hřiště 1: ${a}:${b}, hřiště 2: ${s[0]}:${s[1]}`;
+}
+function halftimeScore(m) {
+  const f = m.goals.filter(g => g.period <= halfPeriods(m));
+  return toHA(m, f.filter(g => g.ours).length, f.filter(g => !g.ours).length);
+}
+const halftimeCaption = m => (m.periods === 2 ? 'poločas' : `po ${halfPeriods(m)}. ${periodWord(m.periods, 'L')}`);
+function playerName(m, id) { if (!id) return null; const p = m.players.find(x => x.id === id); return p ? p.name : null; }
+function minuteLabel(m, period, ms) {
+  const min = Math.floor(ms / 60000) + 1; const base = (period - 1) * m.periodMinutes;
+  return min > m.periodMinutes ? `${base + m.periodMinutes}+${min - m.periodMinutes}'` : `${base + min}'`;
+}
+const evMinute = (m, x) => minuteLabel(m, x.period, x.second * 1000);
+const sortKey = x => x.period * 1e6 + x.second;
+const scoresG = g => g.ours && g.type !== 'OWN_GOAL';
+const scoresP = g => g.type !== 'OWN_GOAL';
+
+function timeline(m) {
+  let o = 0, t = 0;
+  return m.goals.slice().sort((a, b) => sortKey(a) - sortKey(b)).map(g => {
+    if (g.ours) o++; else t++;
+    const [h, a] = toHA(m, o, t);
+    return { goal: g, h, a };
+  });
+}
+function events(m) {
+  return [
+    ...timeline(m).map(e => ({ kind: 'goal', id: e.goal.id, key: sortKey(e.goal), e })),
+    ...m.cards.map(c => ({ kind: 'card', id: c.id, key: sortKey(c), card: c })),
+  ].sort((a, b) => a.key - b.key);
+}
+function goalTypeLabel(t, ours) {
+  if (t === 'PENALTY') return 'Penalta';
+  if (t === 'OWN_GOAL') return ours ? 'Vlastní gól soupeře' : 'Vlastní gól (náš hráč)';
+  return 'Gól';
+}
+const cardLabel = c => (c === 'RED' ? 'Červená karta' : 'Žlutá karta');
+function bookingWho(m, b, team) {
+  return b.ours ? (playerName(m, b.playerId) || `${team} (hráč nezadán)`) : m.opponent + (b.opponentNumber != null ? ` č. ${b.opponentNumber}` : '');
+}
+function goalShareText(m, g, team) {
+  let who;
+  if (g.ours && g.type === 'OWN_GOAL') who = 'vlastní gól soupeře' + (g.opponentNumber != null ? ` (č. ${g.opponentNumber})` : '');
+  else if (g.ours) who = playerName(m, g.scorerId) || `${team} (střelec nezadán)`;
+  else if (g.type === 'OWN_GOAL') who = 'vlastní gól' + (playerName(m, g.scorerId) ? ': ' + playerName(m, g.scorerId) : ' našeho hráče');
+  else who = m.opponent + (g.opponentNumber != null ? ` (č. ${g.opponentNumber})` : '');
+  const extra = [];
+  if (g.type === 'PENALTY') extra.push('penalta');
+  if (scoresG(g) && playerName(m, g.assistId)) extra.push('asistence ' + playerName(m, g.assistId));
+  return extra.length ? `${who} (${extra.join(', ')})` : who;
+}
+
+const playerOrder = (a, b) => ((a.number == null ? 1e9 : a.number) - (b.number == null ? 1e9 : b.number)) || cmpName(a.name, b.name);
+const playerLabel = p => (p.number != null ? `${p.number}  ${p.name}` : p.name);
+
+function scorerStats(m) {
+  const pen = g => (g.type === 'PENALTY' ? ' (pen.)' : '');
+  const items = [
+    ...m.goals.filter(scoresG).sort((a, b) => sortKey(a) - sortKey(b)).map(g => [g.scorerId, evMinute(m, g) + pen(g)]),
+    ...pitchGoals(m).filter(scoresP).map(g => [g.scorerId, 'hřiště 2' + pen(g)]),
+  ];
+  const map = new Map();
+  for (const [id, l] of items) { const k = id || ''; if (!map.has(k)) map.set(k, { id: id || null, labels: [] }); map.get(k).labels.push(l); }
+  return [...map.values()].map(x => ({
+    playerId: x.id, name: playerName(m, x.id) || (x.id ? 'Neznámý hráč' : 'Střelec nezadán'), goals: x.labels.length, minutes: x.labels,
+  })).sort((a, b) => ((a.playerId === null) - (b.playerId === null)) || (b.goals - a.goals));
+}
+const scorerIds = m => [...m.goals.filter(scoresG).map(g => g.scorerId), ...pitchGoals(m).filter(scoresP).map(g => g.scorerId)].filter(Boolean);
+const assistIds = m => [...m.goals.filter(scoresG).map(g => g.assistId), ...pitchGoals(m).filter(scoresP).map(g => g.assistId)].filter(Boolean);
+function assistStats(m) {
+  return Object.entries(countBy(assistIds(m))).map(([id, c]) => [playerName(m, id) || 'Neznámý hráč', c]).sort((a, b) => b[1] - a[1]);
+}
+function lineup(m) {
+  const g = countBy(scorerIds(m)), a = countBy(assistIds(m));
+  const ours = m.cards.filter(c => c.ours);
+  const y = countBy(ours.filter(c => c.color === 'YELLOW').map(c => c.playerId).filter(Boolean));
+  const r = countBy(ours.filter(c => c.color === 'RED').map(c => c.playerId).filter(Boolean));
+  return m.players.slice().sort(playerOrder).map(p => ({ player: p, goals: g[p.id] || 0, assists: a[p.id] || 0, yellow: y[p.id] || 0, red: r[p.id] || 0 }));
+}
+
+function shareText(m, team, squad) {
+  const [h, a] = score(m);
+  let s = `⚽ ${homeName(m, team)} – ${awayName(m, team)} ${h}:${a}`;
+  const pl = pitchesLine(m);
+  if (!pl) {
+    if (hasHalftime(m)) { const [hh, ha] = halftimeScore(m); s += ` (${halftimeCaption(m)} ${hh}:${ha})`; }
+    s += '\n';
+  } else {
+    s += '\n' + pl;
+    if (hasHalftime(m)) { const [hh, ha] = halftimeScore(m); s += ` (${halftimeCaption(m)} na hřišti 1 ${hh}:${ha})`; }
+    s += '\n';
+  }
+  s += [squad, m.categoryLabel, fmtDate(m.date), formatLabel(m)].filter(Boolean).join(', ') + '\n';
+  const ev = events(m);
+  if (ev.length) {
+    s += m.secondPitch ? '\nPrůběh na hřišti 1:\n' : '\nPrůběh:\n';
+    for (const e of ev) {
+      if (e.kind === 'goal') s += `${evMinute(m, e.e.goal)} ${e.e.h}:${e.e.a} ${goalShareText(m, e.e.goal, team)}\n`;
+      else s += `${evMinute(m, e.card)} ${cardLabel(e.card.color).toLowerCase()}: ${bookingWho(m, e.card, team)}\n`;
+    }
+  }
+  const sc = scorerStats(m).filter(x => x.playerId);
+  if (sc.length) s += '\nStřelci: ' + sc.map(x => `${x.name} ${x.goals}×`).join(', ') + '\n';
+  const as = assistStats(m);
+  if (as.length) s += 'Asistence: ' + as.map(x => `${x[0]} ${x[1]}×`).join(', ') + '\n';
+  if (m.note.trim()) s += '\nPoznámka: ' + m.note.trim() + '\n';
+  return s.trimEnd();
+}
+
+// ---------------------------------------------------------------- statistiky sezóny
+function seasonStats(d, sid, tid) {
+  const archived = d.matches.filter(m => m.seasonId === sid && m.status === 'ARCHIVED' && (!tid || m.teamId === tid));
+  const teams = (seasonById(d, sid) || { teams: [] }).teams;
+  const inScope = teams.filter(t => !tid || t.id === tid);
+  const roster = {}, teamOf = {};
+  teams.forEach(t => t.players.forEach(p => { roster[p.id] = p; teamOf[p.id] = t.name; }));
+  const known = {}, apps = {}, goals = {}, assists = {};
+  const inc = (o, k) => { o[k] = (o[k] || 0) + 1; };
+  let unknown = 0;
+  for (const m of archived) {
+    const mt = (teams.find(t => t.id === m.teamId) || { name: '' }).name;
+    for (const p of m.players) { if (!known[p.id]) known[p.id] = p; if (!(p.id in teamOf)) teamOf[p.id] = mt; inc(apps, p.id); }
+    for (const g of m.goals) { if (!scoresG(g)) continue; if (g.scorerId) inc(goals, g.scorerId); else unknown++; if (g.assistId) inc(assists, g.assistId); }
+    for (const g of pitchGoals(m)) { if (!scoresP(g)) continue; if (g.scorerId) inc(goals, g.scorerId); else unknown++; if (g.assistId) inc(assists, g.assistId); }
+  }
+  const ids = [...new Set([...inScope.flatMap(t => t.players.map(p => p.id)), ...Object.keys(apps), ...Object.keys(goals), ...Object.keys(assists)])];
+  const rows = ids.map(id => {
+    const p = roster[id] || known[id];
+    return { playerId: id, name: p ? p.name : 'Neznámý hráč', number: p ? p.number : null, matches: apps[id] || 0, goals: goals[id] || 0, assists: assists[id] || 0, teamName: teamOf[id] || '' };
+  }).sort((a, b) => (b.goals - a.goals) || (b.assists - a.assists) || (b.matches - a.matches) || cmpName(a.name, b.name));
+  return { rows, matchCount: archived.length, unknown };
+}
+function record(list) {
+  return {
+    played: list.length,
+    wins: list.filter(m => ourGoals(m) > theirGoals(m)).length,
+    draws: list.filter(m => ourGoals(m) === theirGoals(m)).length,
+    losses: list.filter(m => ourGoals(m) < theirGoals(m)).length,
+    gf: list.reduce((s, m) => s + ourGoals(m), 0),
+    ga: list.reduce((s, m) => s + theirGoals(m), 0),
+  };
+}
+function seasonOverview(d, sid, tid) {
+  const ms = d.matches.filter(m => m.seasonId === sid && m.status === 'ARCHIVED' && (!tid || m.teamId === tid)).sort((a, b) => a.date - b.date);
+  const stats = seasonStats(d, sid, tid).rows;
+  const teams = (seasonById(d, sid) || { teams: [] }).teams;
+  const lookup = {};
+  teams.forEach(t => t.players.forEach(p => { lookup[p.id] = [p, t.name]; }));
+  for (const m of ms) {
+    const tn = (teams.find(t => t.id === m.teamId) || { name: '' }).name;
+    m.players.forEach(p => { if (!lookup[p.id]) lookup[p.id] = [p, tn]; });
+  }
+  const our = ms.flatMap(m => m.cards.filter(c => c.ours));
+  const their = ms.flatMap(m => m.cards.filter(c => !c.ours));
+  const playerCards = [...new Set(our.map(c => c.playerId).filter(Boolean))].map(id => {
+    const [p, tn] = lookup[id] || [null, ''];
+    const mine = our.filter(c => c.playerId === id);
+    return { playerId: id, name: p ? p.name : 'Neznámý hráč', number: p ? p.number : null, teamName: tn, yellow: mine.filter(c => c.color === 'YELLOW').length, red: mine.filter(c => c.color === 'RED').length };
+  }).sort((a, b) => (b.red - a.red) || (b.yellow - a.yellow) || cmpName(a.name, b.name));
+  return {
+    matches: ms, total: record(ms), home: record(ms.filter(m => m.home)), away: record(ms.filter(m => !m.home)),
+    topScorers: stats.filter(r => r.goals > 0).sort((a, b) => b.goals - a.goals).slice(0, 3),
+    topAssists: stats.filter(r => r.assists > 0).sort((a, b) => b.assists - a.assists).slice(0, 3),
+    ourYellow: our.filter(c => c.color === 'YELLOW').length, ourRed: our.filter(c => c.color === 'RED').length,
+    theirYellow: their.filter(c => c.color === 'YELLOW').length, theirRed: their.filter(c => c.color === 'RED').length,
+    playerCards, unassignedCards: our.filter(c => !c.playerId).length,
+    ourPen: ms.reduce((s, m) => s + m.goals.filter(g => g.ours && g.type === 'PENALTY').length + pitchGoals(m).filter(g => g.type === 'PENALTY').length, 0),
+    theirPen: ms.reduce((s, m) => s + m.goals.filter(g => !g.ours && g.type === 'PENALTY').length, 0),
+    ownFor: ms.reduce((s, m) => s + m.goals.filter(g => g.ours && g.type === 'OWN_GOAL').length + pitchGoals(m).filter(g => g.type === 'OWN_GOAL').length, 0),
+    ownAgainst: ms.reduce((s, m) => s + m.goals.filter(g => !g.ours && g.type === 'OWN_GOAL').length, 0),
+  };
+}
+function dataSummary(d) {
+  const s = d.seasons.length, t = d.seasons.reduce((x, se) => x + se.teams.length, 0);
+  const p = d.seasons.reduce((x, se) => x + se.teams.reduce((y, tm) => y + tm.players.length, 0), 0), m = d.matches.length;
+  return `${s} ${plural(s, 'sezóna', 'sezóny', 'sezón')}, ${t} ${plural(t, 'tým', 'týmy', 'týmů')}, ${p} ${plural(p, 'hráč', 'hráči', 'hráčů')}, ${m} ${plural(m, 'zápas', 'zápasy', 'zápasů')}`;
+}
+// ---------------------------------------------------------------- ukládání
+const LS_KEY = 'goly-data';
+const LS_UPDATED = 'goly-updated';
+let storageOk = true;
+
+function loadLocal() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) return migrate(nData(JSON.parse(raw)));
+  } catch (e) { storageOk = false; }
+  return nData({});
+}
+let D = loadLocal();
+
+function saveLocal(updatedAt) {
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify(D));
+    localStorage.setItem(LS_UPDATED, String(updatedAt));
+    storageOk = true;
+  } catch (e) { storageOk = false; }
+}
+function localUpdated() { try { return Number(localStorage.getItem(LS_UPDATED) || 0); } catch (e) { return 0; } }
+
+/** Uloží změnu (prohlížeč + účet, je-li k dispozici) a překreslí. */
+function commit() {
+  saveLocal(Date.now());
+  Cloud.schedule();
+  render();
+}
+
+// ---------------------------------------------------------------- synchronizace s účtem (db)
+const Caps = { downloads: null };
+const Cloud = {
+  col: null, synced: {}, remoteIds: [], timer: null, busy: false, again: false, status: 'off',
+
+  async init() {
+    if (!window.claude || typeof window.claude.use !== 'function') return;
+    claude.use('downloads').then(x => { Caps.downloads = x; }).catch(() => {});
+    try {
+      const [db, user] = await Promise.all([claude.use('db'), claude.use('user')]);
+      if (!db || !user) return;
+      const id = await user.id();
+      if (!id) return;
+      this.col = db.collection('data/users/' + id);
+      this.status = 'connecting'; renderStatus();
+      await this.pull(true);
+    } catch (e) { this.status = 'error'; this.col = null; }
+    renderStatus();
+  },
+
+  /** Načte data z účtu; novější verze vyhrává. */
+  async pull(first) {
+    if (!this.col) return;
+    try {
+      const snap = await this.col.get();
+      const docs = {};
+      snap.docs.forEach(doc => { if (doc.exists) docs[doc.id] = doc.data(); });
+      const meta = docs.meta;
+      if (meta && meta.data && Number(meta.updatedAt || 0) > localUpdated()) {
+        const md = meta.data;
+        const matches = Object.keys(docs).filter(k => k.startsWith('m-')).map(k => docs[k].match).filter(Boolean);
+        D = migrate(nData({ ...md, matches }));
+        saveLocal(Number(meta.updatedAt));
+        this.synced = this.wanted(Number(meta.updatedAt));
+        this.remoteIds = [];
+        render();
+      } else if (first || (meta && Number(meta.updatedAt || 0) < localUpdated())) {
+        this.synced = {};
+        this.remoteIds = Object.keys(docs);
+        await this.flush();
+      }
+      this.status = 'on';
+    } catch (e) { this.status = 'error'; }
+    renderStatus();
+  },
+
+  wanted(updatedAt) {
+    const w = { meta: JSON.stringify({ updatedAt, data: { teamName: D.teamName, activeSeasonId: D.activeSeasonId, lastTeamId: D.lastTeamId, seasons: D.seasons } }) };
+    for (const m of D.matches) w['m-' + m.id] = JSON.stringify({ match: m });
+    return w;
+  },
+
+  async flush() {
+    if (!this.col) return;
+    if (this.busy) { this.again = true; return; }
+    this.busy = true;
+    try {
+      const want = this.wanted(localUpdated() || Date.now());
+      for (const k of Object.keys(want)) {
+        if (k === 'meta' || this.synced[k] === want[k]) continue;
+        await this.col.doc(k).set(JSON.parse(want[k]));
+        this.synced[k] = want[k];
+      }
+      const known = new Set([...Object.keys(this.synced), ...this.remoteIds]);
+      for (const k of known) {
+        if (k !== 'meta' && !(k in want)) { await this.col.doc(k).delete(); delete this.synced[k]; }
+      }
+      this.remoteIds = [];
+      if (this.synced.meta !== want.meta) { await this.col.doc('meta').set(JSON.parse(want.meta)); this.synced.meta = want.meta; }
+      this.status = 'on';
+    } catch (e) { this.status = 'error'; }
+    this.busy = false;
+    renderStatus();
+    if (this.again) { this.again = false; this.schedule(); }
+  },
+
+  schedule() {
+    if (!this.col) return;
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => this.flush(), 1200);
+  },
+};
+
+function syncText() {
+  if (Cloud.status === 'on') return 'Data se ukládají do vašeho účtu Claude a jsou dostupná i na dalších zařízeních.';
+  if (Cloud.status === 'connecting') return 'Připojuji se k účtu…';
+  if (!storageOk) return 'Prohlížeč nedovolil data uložit. Před zavřením stránky si udělejte export.';
+  return 'Data jsou uložená v tomto zařízení. Pravidelně si dělejte zálohu přes Export a import.';
+}
+function renderStatus() { const el = document.getElementById('syncstatus'); if (el) el.textContent = syncText(); }
+
+// ---------------------------------------------------------------- navigace
+let stack = [{ name: 'home', p: {}, f: {} }];
+let modal = null;
+let useHistory = true;
+const cur = () => stack[stack.length - 1];
+
+function go(name, p = {}) {
+  stack.push({ name, p, f: {} });
+  modal = null;
+  if (useHistory) { try { history.pushState({ depth: stack.length }, ''); } catch (e) { useHistory = false; } }
+  window.scrollTo(0, 0);
+  render();
+}
+let pendingBack = false;
+function back() {
+  if (useHistory && stack.length > 1) {
+    try {
+      pendingBack = true;
+      history.back();
+      // pojistka, kdyby prohlížeč událost popstate nedoručil
+      setTimeout(() => { if (pendingBack) { pendingBack = false; useHistory = false; internalBack(); } }, 400);
+      return;
+    } catch (e) { pendingBack = false; useHistory = false; }
+  }
+  internalBack();
+}
+function internalBack() {
+  if (modal) { modal = null; }
+  if (stack.length > 1) stack.pop();
+  window.scrollTo(0, 0);
+  render();
+}
+/** Nahradí aktuální obrazovku (např. nový zápas → zápas). */
+function replaceTop(name, p = {}) {
+  stack[stack.length - 1] = { name, p, f: {} };
+  modal = null;
+  window.scrollTo(0, 0);
+  render();
+}
+window.addEventListener('popstate', () => { pendingBack = false; if (stack.length > 1) internalBack(); });
+
+// ---------------------------------------------------------------- ikony
+const svg = (d, extra = '') => `<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" ${extra}><path d="${d}" fill="currentColor"/></svg>`;
+const I = {
+  back: svg('M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z'),
+  plus: svg('M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'),
+  edit: svg('M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z'),
+  trash: svg('M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z'),
+  share: svg('M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11A2.99 2.99 0 0021 5a3 3 0 10-5.91.7L8.04 9.81A3 3 0 103 12a3 3 0 005.04 2.19l7.12 4.16c-.05.21-.08.43-.08.65A2.92 2.92 0 1018 16.08z'),
+  play: svg('M8 5v14l11-7z'),
+  pause: svg('M6 19h4V5H6v14zm8-14v14h4V5h-4z'),
+  left: svg('M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z'),
+  right: svg('M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z'),
+  down: svg('M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z'),
+  up: svg('M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z'),
+  cal: svg('M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H5V9h14v11zM7 11h5v5H7z'),
+  list: svg('M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z'),
+  people: svg('M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z'),
+  ball: svg('M12 2a10 10 0 100 20 10 10 0 000-20zm1 3.3l1.35-.95a8.03 8.03 0 014.17 3.03l-.39 1.34-1.35.46L13 6.7V5.3zm-3.35-.95L11 5.3v1.4L7.22 9.18l-1.35-.46-.39-1.34a8.03 8.03 0 014.17-3.03zM7.08 17.11l-1.14.1A7.96 7.96 0 014 12.12l1.1-.8 1.38.48 1.46 4.34-.86.97zm7.42 2.59a7.92 7.92 0 01-5 0l-.69-1.49.64-1.1h4.6l.64 1.1-.69 1.49zM14.84 15H9.16l-1.47-4.36L12 7.65l4.32 2.99L14.84 15zm3.22 2.21l-1.14-.1-.86-.97 1.46-4.34 1.39-.47 1.1.8a7.96 7.96 0 01-1.95 5.08z'),
+  info: svg('M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z'),
+  swap: svg('M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z'),
+  check: svg('M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'),
+};
+
+// ---------------------------------------------------------------- stavební prvky
+function topbar(title, opts = {}) {
+  const { back: hasBack = true, actions = '' } = opts;
+  return `<header class="top"><div class="top-in">
+    ${hasBack ? `<button class="icon-btn" data-a="back" aria-label="Zpět">${I.back}</button>` : '<span class="top-pad"></span>'}
+    <h1 class="top-title">${esc(title)}</h1>
+    <div class="top-act">${actions}</div></div></header>`;
+}
+/** Řádek seznamu. head/sub/over/lead/trail jsou už ošetřené HTML. */
+function row(o) {
+  const click = o.action ? ` data-a="${o.action}" role="button" tabindex="0"` : '';
+  return `<div class="row ${o.cls || ''}"${click} ${o.attrs || ''}>
+    ${o.lead ? `<div class="row-lead">${o.lead}</div>` : ''}
+    <div class="row-main">
+      ${o.over ? `<div class="row-over">${o.over}</div>` : ''}
+      <div class="row-head ${o.muted ? 'muted' : ''}">${o.head || ''}</div>
+      ${o.sub ? `<div class="row-sub">${o.sub}</div>` : ''}
+    </div>
+    ${o.trail ? `<div class="row-trail">${o.trail}</div>` : ''}
+  </div>`;
+}
+function board(m, team, opts = {}) {
+  const [h, a] = score(m); const pl = pitchesLine(m);
+  return `<div class="board ${opts.small ? 'small' : ''}">
+    <div class="board-row">
+      <div class="bt end ${m.home ? 'ours' : ''}"><span class="bt-name">${esc(homeName(m, team))}</span><span class="bt-role">domácí</span></div>
+      <div class="digits">${h}<span class="colon">:</span>${a}</div>
+      <div class="bt ${!m.home ? 'ours' : ''}"><span class="bt-name">${esc(awayName(m, team))}</span><span class="bt-role">hosté</span></div>
+    </div>
+    ${pl ? `<div class="board-sub">${esc(pl)}</div>` : ''}
+    ${opts.below || ''}
+  </div>`;
+}
+function resultBadge(m) {
+  const o = ourGoals(m), t = theirGoals(m);
+  const [l, c] = o > t ? ['V', 'win'] : o < t ? ['P', 'loss'] : ['R', 'draw'];
+  return `<span class="badge ${c}" title="${l === 'V' ? 'výhra' : l === 'P' ? 'prohra' : 'remíza'}">${l}</span>`;
+}
+function matchItem(m, opts = {}) {
+  const [h, a] = score(m);
+  const sub = [fmtDate(m.date), opts.squad ? teamLabel(D, m) : '', m.categoryLabel, m.status === 'ACTIVE' ? 'probíhá' : ''].filter(Boolean).join(', ');
+  return row({
+    action: 'openMatch', attrs: `data-id="${m.id}"`,
+    head: `${esc(homeName(m, D.teamName))} – ${esc(awayName(m, D.teamName))}`,
+    sub: esc(sub) + (opts.note && m.note ? `<br><span class="note-line">${esc(m.note)}</span>` : ''),
+    trail: `<span class="score-sm">${h}:${a}</span>${m.status === 'ACTIVE' ? '<span class="badge live-b">●</span>' : resultBadge(m)}`,
+  });
+}
+const cardIcon = (c, big) => `<span class="cardicon ${c === 'RED' ? 'red' : 'yellow'} ${big ? 'big' : ''}" aria-hidden="true"></span>`;
+function goalRow(e, m, team) {
+  const g = e.goal; const sc = playerName(m, g.scorerId); const as = playerName(m, g.assistId);
+  const blank = scoresG(g) && !sc;
+  let head;
+  if (g.ours && g.type === 'OWN_GOAL') head = 'Vlastní gól soupeře';
+  else if (g.ours) head = sc || '';
+  else if (g.type === 'OWN_GOAL') head = 'Vlastní gól: ' + (sc || 'náš hráč');
+  else head = m.opponent;
+  const det = [];
+  if (g.type === 'PENALTY') det.push('penalta');
+  if (g.opponentNumber != null) det.push(g.ours ? `hráč soupeře č. ${g.opponentNumber}` : `střelec č. ${g.opponentNumber}`);
+  if (blank) det.push('střelec nezadán, klepnutím doplníte');
+  if (scoresG(g) && as) det.push('asistence: ' + as);
+  const sub = det.join(', ');
+  return row({
+    cls: g.ours ? 'ev ours' : 'ev theirs', action: 'editGoal', attrs: `data-id="${g.id}"`,
+    lead: `<span class="minute">${evMinute(m, g)}</span>`,
+    over: esc(g.ours ? team : 'Soupeř'),
+    head: blank ? '<span class="blank" aria-label="střelec nezadán"></span>' : `<span class="${scoresG(g) ? 'strong' : ''}">${esc(head)}</span>`,
+    sub: sub ? esc(sub.charAt(0).toUpperCase() + sub.slice(1)) : '',
+    trail: `<span class="score-sm">${e.h}:${e.a}</span>`,
+  });
+}
+function cardRow(c, m, team) {
+  const who = c.ours ? (playerName(m, c.playerId) || 'Hráč nezadán') : m.opponent + (c.opponentNumber != null ? `, č. ${c.opponentNumber}` : '');
+  return row({
+    cls: c.ours ? 'ev ours' : 'ev theirs', action: 'editCard', attrs: `data-id="${c.id}"`,
+    lead: `<span class="minute muted">${evMinute(m, c)}</span>`,
+    over: esc(c.ours ? team : 'Soupeř'),
+    head: `${cardIcon(c.color)} ${esc(who)}`,
+    sub: esc(cardLabel(c.color)),
+  });
+}
+const eventRow = (ev, m, team) => (ev.kind === 'goal' ? goalRow(ev.e, m, team) : cardRow(ev.card, m, team));
+
+function chips(list, action, extra = '') {
+  return `<div class="chips" ${extra}>${list.map(c => `<button class="chip ${c.on ? 'on' : ''}" data-a="${action}" data-v="${esc(c.v)}" aria-pressed="${c.on ? 'true' : 'false'}">${esc(c.label)}</button>`).join('')}</div>`;
+}
+function stepper(label, key, value, min, max, suffix = '') {
+  return `<div class="stepper"><span class="stepper-label">${esc(label)}</span>
+    <button class="btn-round" data-a="step" data-k="${key}" data-d="-1" data-min="${min}" data-max="${max}" ${value <= min ? 'disabled' : ''} aria-label="Ubrat">−</button>
+    <span class="stepper-val">${value}${suffix}</span>
+    <button class="btn-round" data-a="step" data-k="${key}" data-d="1" data-min="${min}" data-max="${max}" ${value >= max ? 'disabled' : ''} aria-label="Přidat">+</button></div>`;
+}
+function empty(text) { return `<div class="empty"><p>${esc(text)}</p></div>`; }
+function toast(text) {
+  const el = document.getElementById('toast');
+  el.textContent = text; el.classList.add('show');
+  clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('show'), 3200);
+}
+/** Výběr sezóny a týmu (archiv, střelci, přehled). */
+function seasonTeamFilter(f) {
+  if (!f.init) { const s = activeSeason(D) || D.seasons[D.seasons.length - 1]; f.sid = s ? s.id : null; f.tid = null; f.init = true; }
+  const s = seasonById(D, f.sid);
+  let html = '';
+  if (D.seasons.length > 1) html += chips(D.seasons.slice().reverse().map(x => ({ v: x.id, label: seasonLabel(x), on: x.id === f.sid })), 'fSeason');
+  if (s && s.teams.length > 1) html += chips([{ v: '', label: 'Všechny týmy', on: !f.tid }, ...s.teams.map(t => ({ v: t.id, label: t.name, on: t.id === f.tid }))], 'fTeam');
+  return html ? `<div class="filters">${html}</div>` : '';
+}
+// ================================================================ OBRAZOVKY
+const SCREENS = {};
+
+// ---------------------------------------------------------------- úvod
+SCREENS.home = () => {
+  const s = activeSeason(D); const teams = s ? s.teams : [];
+  const active = D.matches.filter(m => m.status === 'ACTIVE').sort((a, b) => b.date - a.date);
+  const unsaved = D.matches.filter(m => m.status === 'FINISHED').sort((a, b) => b.date - a.date);
+  const seasonSub = !s ? 'Klepněte a založte sezónu'
+    : teams.length ? teams.map(t => `${t.name} (${t.players.length})`).join(', ') + ', klepnutím spravujete sezóny'
+      : 'Zatím bez týmů, klepnutím spravujete sezóny';
+  const tile = (label, icon, to, attrs, disabled) =>
+    `<button class="tile" data-a="go" data-to="${to}" ${attrs || ''} ${disabled ? 'disabled' : ''}>${icon}<span>${label}</span></button>`;
+  return topbar(D.teamName, { back: false, actions: `<button class="icon-btn" data-a="editTeamName" aria-label="Upravit název týmu">${I.edit}</button>` }) +
+    `<main class="wrap stack">
+      ${row({ cls: 'card season-card', action: 'go', attrs: 'data-to="seasons"', over: 'Sezóna', head: esc(s ? s.name : 'Zatím žádná sezóna'), sub: esc(seasonSub), trail: I.right })}
+      ${active.map(m => `<div class="live" data-a="openMatch" data-id="${m.id}" role="button" tabindex="0">
+          <div class="live-label">Rozehraný zápas${teamLabel(D, m) ? ' (' + esc(teamLabel(D, m)) + ')' : ''}, klepnutím pokračujete</div>
+          ${board(m, D.teamName, { small: true })}</div>`).join('')}
+      <button class="btn btn-primary btn-xl" data-a="go" data-to="newMatch" ${teams.length ? '' : 'disabled'}>${I.plus}<span>Nový zápas</span></button>
+      ${s && !teams.length ? '<p class="hint">Nejdřív v části Týmy a soupisky založte tým a přidejte hráče.</p>' : ''}
+      <div class="tiles">
+        ${tile('Týmy a soupisky', I.people, 'teams', s ? `data-sid="${s.id}"` : '', !s)}
+        ${tile('Střelci sezóny', I.ball, 'scorers', '', !D.seasons.length)}
+        ${tile('Kalendář zápasů', I.cal, 'calendar')}
+        ${tile('Archiv zápasů', I.list, 'archive')}
+        ${tile('Přehled sezóny', I.info, 'overview', '', !D.seasons.length)}
+        ${tile('Export a import', I.swap, 'data')}
+      </div>
+      ${unsaved.length ? `<section><h2 class="sec">Ukončené, zatím nearchivované</h2>
+        <p class="hint">Otevřete zápas a uložte ho tlačítkem Archivovat.</p>
+        <div class="list">${unsaved.map(m => matchItem(m, { squad: true })).join('')}</div></section>` : ''}
+      <p class="foot" id="syncstatus">${esc(syncText())}</p>
+    </main>`;
+};
+
+// ---------------------------------------------------------------- sezóny
+SCREENS.seasons = (p, f) => {
+  const act = activeSeason(D);
+  const current = D.seasons.filter(s => !s.archived).reverse();
+  const archived = D.seasons.filter(s => s.archived).reverse();
+  const srow = (s, selectable) => {
+    const nt = s.teams.length;
+    const sub = nt ? `${nt} ${plural(nt, 'tým', 'týmy', 'týmů')}: ${s.teams.map(t => t.name).join(', ')}` : 'Zatím bez týmů';
+    return row({
+      action: 'go', attrs: `data-to="teams" data-sid="${s.id}"`,
+      lead: selectable ? `<button class="radio ${act && act.id === s.id ? 'on' : ''}" data-a="setActiveSeason" data-id="${s.id}" aria-label="Zvolit jako aktuální sezónu" aria-pressed="${act && act.id === s.id}"></button>` : '',
+      head: `<span class="strong">${esc(s.name)}</span>${act && act.id === s.id ? ' <span class="tag">aktuální</span>' : ''}`,
+      sub: esc(sub),
+      trail: `<button class="icon-btn" data-a="editSeason" data-id="${s.id}" aria-label="Upravit, archivovat nebo smazat">${I.edit}</button>`,
+    });
+  };
+  let body;
+  if (!D.seasons.length) body = empty('Založte první sezónu, třeba „2026/27 podzim“. V ní pak vytvoříte týmy a jejich soupisky.');
+  else {
+    body = `<p class="hint">Kroužkem zvolíte sezónu, do které se zapisují nové zápasy. Klepnutím na řádek otevřete týmy sezóny.</p>
+      ${current.length ? `<div class="list">${current.map(s => srow(s, true)).join('')}</div>` : '<p>Všechny sezóny jsou archivované. Založte novou sezónu.</p>'}
+      ${archived.length ? `<button class="btn btn-text" data-a="toggle" data-k="showArchived">${f.showArchived ? 'Skrýt archivované sezóny' : `Zobrazit archivované sezóny (${archived.length})`}</button>
+        ${f.showArchived ? `<div class="list">${archived.map(s => srow(s, false)).join('')}</div>` : ''}` : ''}`;
+  }
+  return topbar('Sezóny') + `<main class="wrap stack has-fab">${body}</main>
+    <button class="fab" data-a="addSeason">${I.plus}<span>Nová sezóna</span></button>`;
+};
+
+// ---------------------------------------------------------------- týmy
+SCREENS.teams = p => {
+  const s = seasonById(D, p.sid);
+  if (!s) return topbar('Týmy') + empty('Sezóna neexistuje.');
+  const body = !s.teams.length
+    ? empty('Založte tým, třeba přípravku nebo mladší žáky. Každý tým má vlastní soupisku a vlastní zápasy.')
+    : `<p class="hint">${s.archived ? 'Sezóna je archivovaná, nové zápasy se do ní nezapisují.' : 'Klepnutím na tým otevřete jeho soupisku.'}</p>
+      <div class="list">${s.teams.map(t => row({
+        action: 'go', attrs: `data-to="roster" data-sid="${s.id}" data-tid="${t.id}"`,
+        head: `<span class="strong">${esc(t.name)}</span>`,
+        sub: `${t.players.length} ${plural(t.players.length, 'hráč', 'hráči', 'hráčů')} na soupisce`,
+        trail: `<button class="icon-btn" data-a="renameTeam" data-sid="${s.id}" data-tid="${t.id}" aria-label="Přejmenovat tým">${I.edit}</button>
+                <button class="icon-btn danger" data-a="deleteTeam" data-sid="${s.id}" data-tid="${t.id}" aria-label="Smazat tým">${I.trash}</button>`,
+      })).join('')}</div>`;
+  return topbar(`Týmy sezóny ${s.name}`) + `<main class="wrap stack has-fab">${body}</main>
+    <button class="fab" data-a="addTeam" data-sid="${s.id}">${I.plus}<span>Nový tým</span></button>`;
+};
+
+// ---------------------------------------------------------------- soupiska
+SCREENS.roster = p => {
+  const s = seasonById(D, p.sid); const t = teamById(D, p.sid, p.tid);
+  if (!s || !t) return topbar('Soupiska') + empty('Tým neexistuje.');
+  const players = t.players.slice().sort(playerOrder);
+  const body = !players.length ? empty('Soupiska je prázdná. Přidejte hráče tlačítkem dole.')
+    : `<p class="hint">${players.length} ${plural(players.length, 'hráč', 'hráči', 'hráčů')}, sezóna ${esc(s.name)}</p>
+      <div class="list">${players.map(pl => row({
+        action: 'editPlayer', attrs: `data-sid="${s.id}" data-tid="${t.id}" data-pid="${pl.id}"`,
+        lead: `<span class="jersey">${pl.number != null ? pl.number : '–'}</span>`,
+        head: esc(pl.name), trail: I.edit,
+      })).join('')}</div>`;
+  return topbar(`Soupiska: ${t.name}`, { actions: `<button class="icon-btn" data-a="deleteTeam" data-sid="${s.id}" data-tid="${t.id}" data-back="1" aria-label="Smazat tým">${I.trash}</button>` }) +
+    `<main class="wrap stack has-fab">${body}</main>
+    <button class="fab" data-a="addPlayer" data-sid="${s.id}" data-tid="${t.id}">${I.plus}<span>Přidat hráče</span></button>`;
+};
+
+// ---------------------------------------------------------------- nový zápas
+const CATEGORIES = [
+  { t: 'Děti', p: 4, m: 20, hint: 'Čtyři čtvrtiny po 17–20 minutách, délku upravte níže.' },
+  { t: 'Žáci', p: 2, m: 35, hint: 'Dva poločasy po 35 minutách.' },
+  { t: 'Dorost', p: 2, m: 40, hint: 'Dva poločasy po 40 minutách.' },
+  { t: 'Vlastní', p: 2, m: 30, hint: 'Nastavte počet částí a jejich délku.' },
+];
+function teamDefaults(t) {
+  const c = CATEGORIES.find(x => x.t === t.lastCategory) || CATEGORIES[1];
+  return { cat: c.t, periods: t.lastPeriods || c.p, minutes: t.lastPeriodMinutes || c.m };
+}
+function initNewMatchTeam(f, t) {
+  Object.assign(f, teamDefaults(t));
+  f.teamId = t.id;
+  f.selected = t.players.map(p => p.id);
+  f.numbers = Object.fromEntries(t.players.map(p => [p.id, p.number]));
+}
+SCREENS.newMatch = (p, f) => {
+  const s = activeSeason(D); const teams = s ? s.teams : [];
+  if (!s || !teams.length) return topbar('Nový zápas') + empty('Nejdřív založte sezónu a tým.');
+  if (!f.init) {
+    const t = teams.find(x => x.id === D.lastTeamId) || teams[0];
+    Object.assign(f, { init: true, opponent: '', home: true, date: dayKey(Date.now()), note: '', twoPitches: false });
+    initNewMatchTeam(f, t);
+  }
+  const team = teams.find(t => t.id === f.teamId) || teams[0];
+  const players = team.players.slice().sort(playerOrder);
+  const cat = CATEGORIES.find(c => c.t === f.cat) || CATEGORIES[3];
+  const sel = new Set(f.selected);
+  const nums = players.filter(pl => sel.has(pl.id)).map(pl => f.numbers[pl.id]).filter(n => n != null);
+  const dup = [...new Set(nums.filter((n, i) => nums.indexOf(n) !== i))].sort((a, b) => a - b);
+  const all = players.length && sel.size === players.length;
+
+  return topbar('Nový zápas') + `<main class="wrap stack has-bar">
+    ${teams.length > 1 ? `<section><h2 class="sec">Náš tým</h2>${chips(teams.map(t => ({ v: t.id, label: t.name, on: t.id === team.id })), 'nmTeam')}</section>` : ''}
+    <section>
+      <label class="field"><span>Soupeř (název týmu)</span>
+        <input type="text" data-in="f.opponent" value="${esc(f.opponent)}" autocapitalize="words" autocomplete="off" enterkeyhint="done"></label>
+    </section>
+    <section><h2 class="sec">Hrajeme jako</h2>
+      ${chips([{ v: '1', label: 'Domácí', on: f.home }, { v: '0', label: 'Hosté', on: !f.home }], 'nmHome')}</section>
+    <section><h2 class="sec">Datum zápasu</h2>
+      <label class="field"><span class="sr">Datum</span><input type="date" data-in="f.date" value="${esc(f.date)}"></label></section>
+    <section><h2 class="sec">Kategorie a délka zápasu</h2>
+      ${chips(CATEGORIES.map(c => ({ v: c.t, label: c.t, on: c.t === f.cat })), 'nmCat')}
+      <p class="hint">${esc(cat.hint)}</p>
+      ${stepper('Počet částí', 'periods', f.periods, 1, 4)}
+      ${stepper('Délka části', 'minutes', f.minutes, 5, 60, ' min')}
+      <p class="hint">Celkem ${f.periods * f.minutes} minut hrací doby</p>
+    </section>
+    <section>
+      <label class="switch-row"><span><b>Hraje se na dvou hřištích</b><br>
+        <small>Góly zapisujete na jednom hřišti, skóre z druhého doplníte číslem. Výsledek je součet.</small></span>
+        <input type="checkbox" class="switch" data-in="f.twoPitches" ${f.twoPitches ? 'checked' : ''}></label>
+    </section>
+    <section><h2 class="sec">Poznámka</h2>
+      <label class="field"><span class="sr">Poznámka</span>
+        <textarea data-in="f.note" rows="2" placeholder="Nepovinné, např. hřiště, počasí…">${esc(f.note)}</textarea></label></section>
+    <section><h2 class="sec">Hráči v zápase</h2>
+      <div class="between"><span>Vybráno ${sel.size} z ${players.length}</span>
+        ${players.length ? `<button class="btn btn-text" data-a="nmAll">${all ? 'Zrušit výběr' : 'Vybrat vše'}</button>` : ''}</div>
+      ${players.length ? '<p class="hint">Klepnutím na číslo změníte číslo dresu jen pro tento zápas.</p>'
+        : `<div class="card pad"><p>Soupiska týmu ${esc(team.name)} je prázdná. Bez hráčů nepůjde zadat střelce.</p>
+           <button class="btn btn-text" data-a="go" data-to="roster" data-sid="${s.id}" data-tid="${team.id}">Doplnit soupisku</button></div>`}
+      ${dup.length ? `<p class="warn">Pozor, stejné číslo má více hráčů: ${dup.join(', ')}</p>` : ''}
+      <div class="list">${players.map(pl => {
+        const on = sel.has(pl.id); const n = f.numbers[pl.id]; const changed = n !== pl.number;
+        return row({
+          action: 'nmTogglePlayer', attrs: `data-pid="${pl.id}"`,
+          lead: `<span class="check ${on ? 'on' : ''}" aria-hidden="true">${on ? I.check : ''}</span>`,
+          head: esc(pl.name),
+          trail: on ? `<button class="numbtn ${changed ? 'changed' : ''}" data-a="nmNumber" data-pid="${pl.id}" aria-label="Číslo dresu">č. ${n != null ? n : '–'}</button>` : '',
+        });
+      }).join('')}</div>
+    </section>
+  </main>
+  <div class="bar"><button class="btn btn-primary btn-xl" data-a="startMatch">Zahájit zápas</button></div>`;
+};
+
+// ---------------------------------------------------------------- zápas
+SCREENS.match = p => {
+  const m = matchById(D, p.id);
+  if (!m) return topbar('Zápas') + empty('Zápas už neexistuje.');
+  const team = D.teamName; const squad = teamLabel(D, m);
+  const now = Date.now(); const e = elapsedAt(m, now); const lim = m.periodMinutes * 60000;
+  const over = m.periodStarted && !m.periodEnded && e >= lim;
+  if (over) vibrated.add(m.id + ':' + m.currentPeriod);
+  const n = m.currentPeriod;
+  const status = !m.periodStarted ? 'Před výkopem'
+    : m.periodEnded ? `Přestávka po ${n}. ${periodWord(m.periods, 'L')}`
+      : isRunning(m) ? `${n}. ${periodWord(m.periods, 'N')}` : `${n}. ${periodWord(m.periods, 'N')}, pozastaveno`;
+  const clock = `<div class="clock ${over ? 'over' : ''}" id="clockpanel">
+      <div class="clock-status">${esc(status)}</div>
+      <div class="clock-time" id="clock">${formatClock(e)}</div>
+      <div class="clock-sub" id="clocksub">${over ? `Nastavený čas +${formatClock(e - lim)}` : `z ${formatClock(lim)}, hraje se ${formatLabel(m)}`}</div></div>`;
+  let controls;
+  if (!m.periodStarted) controls = `<button class="btn btn-primary btn-l" data-a="periodStart">${I.play}<span>Zahájit 1. ${periodWord(m.periods, 'A')}</span></button>`;
+  else if (m.periodEnded) controls = `<button class="btn btn-primary btn-l" data-a="periodNext">${I.play}<span>Zahájit ${n + 1}. ${periodWord(m.periods, 'A')}</span></button>`;
+  else controls = `<div class="two">
+      ${isRunning(m) ? `<button class="btn btn-outline btn-l" data-a="pause">${I.pause}<span>Pauza</span></button>`
+        : `<button class="btn btn-tonal btn-l" data-a="resume">${I.play}<span>Pokračovat</span></button>`}
+      <button class="btn btn-outline btn-l" data-a="periodEnd">${isLast(m) ? 'Konec zápasu' : `Konec ${n}. ${periodWord(m.periods, 'G')}`}</button></div>`;
+  const ourBtn = `<button class="goal-btn ours" data-a="goal" data-ours="1"><b>GÓL</b><span>${esc(team)}</span></button>`;
+  const theirBtn = `<button class="goal-btn theirs" data-a="goal" data-ours="0"><b>GÓL</b><span>${esc(m.opponent)}</span></button>`;
+  const sp = secondScore(m);
+  const evs = events(m).reverse();
+  return topbar(`${squad || m.categoryLabel}: ${m.opponent}`, {
+    actions: `<button class="btn btn-text" data-a="finishNow">Ukončit</button>
+      <button class="icon-btn" data-a="deleteMatch" data-id="${m.id}" aria-label="Smazat zápas">${I.trash}</button>`,
+  }) + `<main class="wrap stack match">
+    ${board(m, team, { below: clock })}
+    ${controls}
+    <div class="two goals">${m.home ? ourBtn + theirBtn : theirBtn + ourBtn}</div>
+    <div class="two">
+      <button class="btn btn-outline" data-a="card" data-c="YELLOW">${cardIcon('YELLOW')}<span>Žlutá karta</span></button>
+      <button class="btn btn-outline" data-a="card" data-c="RED">${cardIcon('RED')}<span>Červená karta</span></button>
+    </div>
+    ${sp ? `<button class="pitch2" data-a="secondPitch"><span>Hřiště 2</span><b>${sp[0]}:${sp[1]}</b><em>Upravit</em></button>` : ''}
+    <section>${evs.length ? `<div class="list">${evs.map(ev => eventRow(ev, m, team)).join('')}</div>` : '<p class="hint">Zatím bez gólů a karet.</p>'}</section>
+  </main>`;
+};
+
+// ---------------------------------------------------------------- detail zápasu
+SCREENS.summary = (p, f) => {
+  const m = matchById(D, p.id);
+  if (!m) return topbar('Detail zápasu') + empty('Zápas už neexistuje.');
+  const team = D.teamName; const squad = teamLabel(D, m); const s = seasonById(D, m.seasonId);
+  const meta = [squad, m.categoryLabel, formatLabel(m), s ? 'sezóna ' + s.name : ''].filter(Boolean).join(', ');
+  let ht = '';
+  if (hasHalftime(m)) {
+    const [hh, ha] = halftimeScore(m);
+    ht = `<div class="board-sub">${m.periods === 2 ? `Poločas ${hh}:${ha}` : `V polovině zápasu (${halftimeCaption(m)}) ${hh}:${ha}`}${m.secondPitch ? ' na hřišti 1' : ''}</div>`;
+  }
+  const sp = secondScore(m);
+  const scorers = scorerStats(m); const assists = assistStats(m); const evs = events(m);
+  const pgs = pitchGoals(m); const lu = lineup(m);
+  const archived = m.status === 'ARCHIVED';
+  return topbar('Detail zápasu', {
+    actions: `<button class="icon-btn" data-a="deleteMatch" data-id="${m.id}" aria-label="Smazat zápas">${I.trash}</button>
+      <button class="icon-btn" data-a="share" data-id="${m.id}" aria-label="Sdílet">${I.share}</button>`,
+  }) + `<main class="wrap stack has-bar">
+    <p class="meta">${esc(meta)}</p>
+    ${board(m, team, { below: ht })}
+    <div class="card info">
+      <label class="info-row"><span class="lbl">Datum</span>
+        <input type="date" value="${dayKey(m.date)}" data-change="matchDate" data-id="${m.id}"></label>
+      <div class="info-row"><div><span class="lbl">Druhé hřiště</span>
+        <div class="${sp ? '' : 'muted'}">${sp ? `Skóre ${sp[0]}:${sp[1]}, započítáno do výsledku` : 'Hrálo se jen na jednom hřišti'}</div></div>
+        <button class="btn btn-text" data-a="secondPitch">${sp ? 'Upravit' : 'Přidat'}</button></div>
+      <div class="info-row"><div><span class="lbl">Poznámka</span>
+        <div class="${m.note ? 'pre' : 'muted'}">${esc(m.note || 'Bez poznámky')}</div></div>
+        <button class="btn btn-text" data-a="editNote">${m.note ? 'Upravit' : 'Přidat'}</button></div>
+    </div>
+
+    <section><h2 class="sec">Střelci</h2>
+      ${scorers.length ? `<div class="list">${scorers.map(x => row({
+        head: `<span class="${x.playerId ? 'strong' : 'muted'}">${esc(x.name)}</span>`, sub: esc(x.minutes.join(', ')),
+        trail: `<span class="big-num">${x.goals}×</span>`,
+      })).join('')}</div>` : '<p>Náš tým v tomto zápase neskóroval.</p>'}</section>
+    ${assists.length ? `<section><h2 class="sec">Asistence</h2><div class="list">${assists.map(([n, c]) => row({ head: esc(n), trail: `<span class="score-sm">${c}×</span>` })).join('')}</div></section>` : ''}
+
+    <section><h2 class="sec">${m.secondPitch ? 'Průběh na hřišti 1' : 'Průběh zápasu'}</h2>
+      ${!evs.length ? '<p>Zápas skončil bez gólů a karet.</p>'
+        : (m.goals.some(g => scoresG(g) && !g.scorerId) ? '<p class="hint">Klepnutím na gól doplníte střelce.</p>' : '') +
+          `<div class="list">${evs.map(ev => eventRow(ev, m, team)).join('')}</div>`}</section>
+
+    ${pgs.length ? `<section><h2 class="sec">Naše góly na hřišti 2</h2>
+      ${pgs.some(g => scoresP(g) && !g.scorerId) ? '<p class="hint">Klepnutím na gól doplníte střelce.</p>' : ''}
+      <div class="list">${pgs.map((g, i) => {
+        const sc = playerName(m, g.scorerId); const as = playerName(m, g.assistId);
+        const det = [g.type === 'PENALTY' ? 'penalta' : '', g.opponentNumber != null ? `hráč soupeře č. ${g.opponentNumber}` : '',
+          !scoresP(g) ? '' : !sc ? 'střelec nezadán, klepnutím doplníte' : as ? 'asistence: ' + as : 'bez asistence'].filter(Boolean).join(', ');
+        return row({
+          action: 'editPitchGoal', attrs: `data-id="${g.id}"`, lead: `<span class="minute">${i + 1}.</span>`,
+          head: !scoresP(g) ? 'Vlastní gól soupeře' : sc ? `<span class="strong">${esc(sc)}</span>` : '<span class="blank" aria-label="střelec nezadán"></span>',
+          sub: esc(det.charAt(0).toUpperCase() + det.slice(1)), trail: I.edit,
+        });
+      }).join('')}</div></section>` : ''}
+
+    <section>
+      <button class="expander" data-a="toggle" data-k="lineup" aria-expanded="${!!f.lineup}">
+        <span>Soupiska zápasu (${lu.length} ${plural(lu.length, 'hráč', 'hráči', 'hráčů')})</span>${f.lineup ? I.up : I.down}</button>
+      ${f.lineup ? (lu.length ? `<p class="hint">Klepnutím na hráče změníte jeho číslo dresu pro tento zápas.</p>
+        <div class="list">${lu.map(r => {
+          const st = [r.goals ? `${r.goals} ${plural(r.goals, 'gól', 'góly', 'gólů')}` : '', r.assists ? `${r.assists} ${plural(r.assists, 'asistence', 'asistence', 'asistencí')}` : ''].filter(Boolean).join(', ');
+          const cards = cardIcon('YELLOW').repeat(r.yellow) + cardIcon('RED').repeat(r.red);
+          return row({
+            action: 'lineupNumber', attrs: `data-pid="${r.player.id}"`,
+            lead: `<span class="jersey">${r.player.number != null ? r.player.number : '–'}</span>`,
+            head: esc(r.player.name), sub: cards ? `<span class="cards">${cards}</span>` : '', trail: st ? `<span class="strong">${esc(st)}</span>` : '',
+          });
+        }).join('')}</div>` : '<p>U tohoto zápasu nebyli vybraní žádní hráči.</p>') : ''}
+    </section>
+    <button class="btn btn-text danger" data-a="deleteMatch" data-id="${m.id}">Smazat zápas</button>
+  </main>
+  <div class="bar two">
+    ${archived ? `<span class="saved">${I.check}<span>Uloženo v archivu</span></span>` : `<button class="btn btn-primary btn-l" data-a="archive" data-id="${m.id}">Archivovat</button>`}
+    <button class="btn btn-outline btn-l" data-a="share" data-id="${m.id}">${I.share}<span>Sdílet</span></button>
+  </div>`;
+};
+
+// ---------------------------------------------------------------- archiv
+SCREENS.archive = (p, f) => {
+  const filt = seasonTeamFilter(f);
+  const list = D.matches.filter(m => m.status === 'ARCHIVED' && m.seasonId === f.sid && (!f.tid || m.teamId === f.tid)).sort((a, b) => b.date - a.date);
+  const r = record(list);
+  return topbar('Archiv zápasů') + `<main class="wrap stack">${filt}
+    ${!list.length ? empty('Tady zatím nic není. Zápas uložíte po jeho skončení tlačítkem Archivovat.')
+      : `<p class="hint">${list.length} ${plural(list.length, 'zápas', 'zápasy', 'zápasů')}: výhry ${r.wins}, remízy ${r.draws}, prohry ${r.losses}</p>
+         <div class="list">${list.map(m => matchItem(m, { squad: !f.tid })).join('')}</div>`}</main>`;
+};
+
+// ---------------------------------------------------------------- střelci
+SCREENS.scorers = (p, f) => {
+  const filt = seasonTeamFilter(f);
+  const st = f.sid ? seasonStats(D, f.sid, f.tid) : null;
+  const s = seasonById(D, f.sid);
+  const showTeam = !f.tid && s && s.teams.length > 1;
+  let body;
+  if (!st || !st.rows.length) body = empty('Pro tento výběr nejsou na soupisce žádní hráči.');
+  else body = `<p class="hint">${st.matchCount ? `Z ${st.matchCount} ${plural(st.matchCount, 'archivovaného zápasu', 'archivovaných zápasů', 'archivovaných zápasů')}.` : 'Zatím žádný archivovaný zápas, hráči jsou ze soupisky.'}${st.unknown ? ` Gólů bez zadaného střelce: ${st.unknown}.` : ''}</p>
+    <div class="table-wrap"><table class="stats">
+      <thead><tr><th class="rank" scope="col"><span class="sr">Pořadí</span></th><th scope="col">Hráč</th><th scope="col" title="Zápasy">Záp.</th><th scope="col">Góly</th><th scope="col" title="Asistence">Asist.</th></tr></thead>
+      <tbody>${st.rows.map((r, i) => `<tr class="${r.matches ? '' : 'inactive'}">
+        <td class="rank">${i + 1}.</td>
+        <td><span class="pn">${esc(r.name)}${r.number != null ? ` (${r.number})` : ''}</span>${showTeam && r.teamName ? `<span class="pt">${esc(r.teamName)}</span>` : ''}</td>
+        <td>${r.matches}</td><td class="g">${r.goals}</td><td>${r.assists}</td></tr>`).join('')}</tbody></table></div>`;
+  return topbar('Střelci sezóny') + `<main class="wrap stack">${filt}${body}</main>`;
+};
+
+// ---------------------------------------------------------------- přehled sezóny
+SCREENS.overview = (p, f) => {
+  const filt = seasonTeamFilter(f);
+  const ov = f.sid ? seasonOverview(D, f.sid, f.tid) : null;
+  const s = seasonById(D, f.sid);
+  const showTeam = !f.tid && s && s.teams.length > 1;
+  if (!ov || !ov.matches.length) return topbar('Přehled sezóny') + `<main class="wrap stack">${filt}${empty('Přehled se počítá z archivovaných zápasů. Pro tento výběr zatím žádný není.')}</main>`;
+  const t = ov.total;
+  const small = (title, r) => `<div class="card pad small-rec"><span class="lbl">${title}</span>${r.played
+    ? `<b class="sr-score">${r.gf}:${r.ga}</b><span>V ${r.wins}  R ${r.draws}  P ${r.losses}</span>` : '<span>bez zápasu</span>'}</div>`;
+  const leader = (list, val) => `<div class="list">${list.map((r, i) => row({
+    lead: `<span class="rankno">${i + 1}.</span>`, head: `<span class="strong">${esc(r.name)}</span>`,
+    sub: showTeam ? esc(r.teamName) : '', trail: `<span class="score-sm">${val(r)}</span>`,
+  })).join('')}</div>`;
+  const counts = (y, r) => `<span class="cardcount">${cardIcon('YELLOW')} ${y}</span><span class="cardcount">${cardIcon('RED')} ${r}</span>`;
+  return topbar('Přehled sezóny') + `<main class="wrap stack">${filt}
+    <div class="board record">
+      <div class="rec-played">${t.played} ${plural(t.played, 'zápas', 'zápasy', 'zápasů')}</div>
+      <div class="digits">${t.gf}<span class="colon">:</span>${t.ga}</div>
+      <div class="rec-wdl">výhry ${t.wins}, remízy ${t.draws}, prohry ${t.losses}</div>
+      <div class="board-sub">Průměrně ${avg(t.gf, t.played)} : ${avg(t.ga, t.played)} gólu na zápas</div>
+    </div>
+    <div class="two">${small('Doma', ov.home)}${small('Venku', ov.away)}</div>
+    ${ov.topScorers.length ? `<section><h2 class="sec">Nejlepší střelci</h2>${leader(ov.topScorers, r => `${r.goals} ${plural(r.goals, 'gól', 'góly', 'gólů')}`)}</section>` : ''}
+    ${ov.topAssists.length ? `<section><h2 class="sec">Nejvíce asistencí</h2>${leader(ov.topAssists, r => `${r.assists} ${plural(r.assists, 'asistence', 'asistence', 'asistencí')}`)}</section>` : ''}
+    <section><h2 class="sec">Karty</h2>
+      <div class="list">
+        ${row({ head: esc(D.teamName), trail: counts(ov.ourYellow, ov.ourRed) })}
+        ${row({ head: 'Soupeři', trail: counts(ov.theirYellow, ov.theirRed) })}
+      </div>
+      ${ov.playerCards.length ? `<div class="list">${ov.playerCards.map(pc => row({
+        head: esc(pc.name + (pc.number != null ? ` (${pc.number})` : '')), sub: showTeam ? esc(pc.teamName) : '', trail: counts(pc.yellow, pc.red),
+      })).join('')}</div>` : ''}
+      ${ov.unassignedCards ? `<p class="hint">Karet bez zadaného hráče: ${ov.unassignedCards}</p>` : ''}
+    </section>
+    <section><h2 class="sec">Penalty a vlastní góly</h2>
+      <p>Penalty: náš tým ${ov.ourPen}, soupeři ${ov.theirPen}<br>
+      Vlastní góly soupeřů v náš prospěch: ${ov.ownFor}<br>Naše vlastní góly: ${ov.ownAgainst}</p></section>
+    <section><h2 class="sec">Odehrané zápasy</h2><div class="list">${ov.matches.map(m => matchItem(m, { squad: showTeam })).join('')}</div></section>
+  </main>`;
+};
+
+// ---------------------------------------------------------------- kalendář
+SCREENS.calendar = (p, f) => {
+  if (!f.init) { const n = new Date(); f.y = n.getFullYear(); f.m = n.getMonth(); f.sel = null; f.init = true; }
+  const byDay = {};
+  D.matches.forEach(m => { const k = dayKey(m.date); (byDay[k] = byDay[k] || []).push(m); });
+  const today = dayKey(Date.now());
+  const first = new Date(f.y, f.m, 1);
+  const offset = (first.getDay() + 6) % 7; // pondělí = 0
+  const days = new Date(f.y, f.m + 1, 0).getDate();
+  const cells = [];
+  for (let i = 0; i < offset; i++) cells.push('<span class="day pad"></span>');
+  for (let d = 1; d <= days; d++) {
+    const k = `${f.y}-${pad2(f.m + 1)}-${pad2(d)}`; const ms = byDay[k] || [];
+    const dots = ms.slice(0, 3).map(m => `<i class="dot ${m.status === 'ACTIVE' ? 'live' : ourGoals(m) > theirGoals(m) ? 'win' : ourGoals(m) < theirGoals(m) ? 'loss' : 'draw'}"></i>`).join('');
+    cells.push(`<button class="day ${ms.length ? 'has' : ''} ${k === today ? 'today' : ''} ${k === f.sel ? 'sel' : ''}" data-a="calDay" data-k="${k}" aria-label="${d}. ${f.m + 1}.${ms.length ? ', ' + ms.length + ' ' + plural(ms.length, 'zápas', 'zápasy', 'zápasů') : ''}">
+      <span>${d}</span><span class="dots">${dots}</span></button>`);
+  }
+  const isNow = (() => { const n = new Date(); return n.getFullYear() === f.y && n.getMonth() === f.m; })();
+  const shown = f.sel ? (byDay[f.sel] || []).slice().sort((a, b) => a.date - b.date)
+    : D.matches.filter(m => { const d = new Date(m.date); return d.getFullYear() === f.y && d.getMonth() === f.m; }).sort((a, b) => a.date - b.date);
+  return topbar('Kalendář zápasů') + `<main class="wrap stack">
+    <div class="cal-head"><button class="icon-btn" data-a="calMove" data-d="-1" aria-label="Předchozí měsíc">${I.left}</button>
+      <h2>${MONTHS[f.m]} ${f.y}</h2>
+      <button class="icon-btn" data-a="calMove" data-d="1" aria-label="Další měsíc">${I.right}</button></div>
+    ${isNow ? '' : '<button class="btn btn-text center" data-a="calToday">Přejít na dnešek</button>'}
+    <div class="cal">${['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'].map(d => `<span class="wd">${d}</span>`).join('')}${cells.join('')}</div>
+    <div class="legend"><span><i class="dot win"></i>výhra</span><span><i class="dot draw"></i>remíza</span><span><i class="dot loss"></i>prohra</span><span><i class="dot live"></i>probíhá</span></div>
+    <section><h2 class="sec">${f.sel ? 'Zápasy ' + fmtDayKey(f.sel) : 'Zápasy: ' + MONTHS[f.m].toLowerCase() + ' ' + f.y}</h2>
+      ${shown.length ? `<div class="list">${shown.map(m => matchItem(m, { squad: true, note: true })).join('')}</div>`
+        : `<p class="hint">${f.sel ? 'Tento den se nehrál žádný zápas.' : 'V tomto měsíci nejsou žádné zápasy.'}</p>`}</section>
+  </main>`;
+};
+
+// ---------------------------------------------------------------- export a import
+SCREENS.data = () => topbar('Export a import dat') + `<main class="wrap stack">
+  <p>V aplikaci je teď: ${esc(dataSummary(D))}.</p>
+  <p class="hint" id="syncstatus">${esc(syncText())}</p>
+  <section><h2 class="sec">Export</h2>
+    <p>Uloží všechna data, tedy sezóny, týmy, soupisky a zápasy, do jednoho souboru. Soubor je stejný jako u aplikace pro Android, takže data můžete přenést oběma směry.</p>
+    <button class="btn btn-primary btn-l" data-a="exportData">Exportovat data</button></section>
+  <section><h2 class="sec">Import</h2>
+    <p>Načte data ze souboru zálohy. Všechna současná data se nahradí obsahem zálohy. Než to potvrdíte, ukáže se, co záloha obsahuje.</p>
+    <button class="btn btn-outline btn-l" data-a="pickImport">Importovat ze souboru</button>
+    <button class="btn btn-text" data-a="pasteImport">Vložit zálohu jako text</button>
+    <input type="file" id="importFile" accept=".json,application/json,text/plain" hidden></section>
+</main>`;
+// ================================================================ DIALOGY
+const MODALS = {};
+function openModal(m) { modal = m; renderModal(); }
+function closeModal() { modal = null; renderModal(); }
+function confirmModal(title, text, yes, onYes, destructive = true) {
+  openModal({ type: 'confirm', title, text, yes, onYes, destructive });
+}
+
+MODALS.confirm = m => `<h2>${esc(m.title)}</h2><p>${esc(m.text)}</p>
+  <div class="sheet-actions"><button class="btn btn-text" data-a="closeModal">Zrušit</button><span class="grow"></span>
+  <button class="btn ${m.destructive ? 'btn-danger' : 'btn-primary'}" data-primary data-a="modalYes">${esc(m.yes)}</button></div>`;
+
+MODALS.text = m => `<h2>${esc(m.title)}</h2>
+  <label class="field"><span>${esc(m.label)}</span>${m.multiline
+    ? `<textarea data-in="m.value" rows="5" placeholder="${esc(m.placeholder || '')}">${esc(m.value)}</textarea>`
+    : `<input type="text" data-in="m.value" value="${esc(m.value)}" autocapitalize="${m.caps || 'sentences'}" autocomplete="off" enterkeyhint="done">`}</label>
+  ${m.extra ? m.extra(m) : ''}
+  <div class="sheet-actions"><button class="btn btn-text" data-a="closeModal">Zrušit</button><span class="grow"></span>
+  <button class="btn btn-primary" data-primary data-a="textSave">${esc(m.yes || 'Uložit')}</button></div>`;
+
+MODALS.player = m => `<h2>${m.pid ? 'Upravit hráče' : 'Nový hráč'}</h2>
+  <label class="field"><span>Jméno</span><input type="text" id="pname" data-in="m.name" value="${esc(m.name)}" autocapitalize="words" autocomplete="off"></label>
+  <label class="field"><span>Číslo dresu (nepovinné)</span><input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" data-in="m.number" value="${esc(m.number)}" enterkeyhint="done"></label>
+  ${m.last ? `<p class="ok">Přidán: ${esc(m.last)}</p>` : ''}
+  ${m.pid ? '<button class="btn btn-text danger" data-a="playerDelete">Smazat hráče</button>' : ''}
+  <div class="sheet-actions"><button class="btn btn-text" data-a="closeModal">${m.pid ? 'Zrušit' : 'Hotovo'}</button><span class="grow"></span>
+  <button class="btn btn-primary" data-primary data-a="playerSave">${m.pid ? 'Uložit' : 'Přidat'}</button></div>`;
+
+function playerGrid(players, selId) {
+  if (!players.length) return '<p>V zápase nejsou vybraní žádní hráči.</p>';
+  return `<div class="pgrid">${players.map(p => `<button class="ptile ${p.id === selId ? 'on' : ''}" data-a="pickPlayer" data-pid="${p.id}">
+    ${p.number != null ? `<b>${p.number}</b>` : ''}<span>${esc(p.name)}</span></button>`).join('')}</div>`;
+}
+function numpad(v) {
+  const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'C', '0', '⌫'];
+  return `<div class="numpad"><div class="np-val">č. ${v ? esc(v) : '–'}</div>
+    ${keys.map(k => `<button class="np-key" data-a="np" data-k="${k}" aria-label="${k === 'C' ? 'Smazat vše' : k === '⌫' ? 'Smazat číslici' : k}">${k}</button>`).join('')}</div>`;
+}
+function goalMode(m) {
+  if (m.ours && m.gtype !== 'OWN_GOAL') return 'scorer';
+  if (!m.ours && m.gtype === 'OWN_GOAL') return 'own';
+  return 'number';
+}
+MODALS.goal = m => {
+  const match = matchById(D, m.mid); if (!match) return '';
+  const players = match.players.slice().sort(playerOrder);
+  const mode = goalMode(m);
+  const title = mode === 'scorer' ? (m.step === 0 ? 'Kdo dal gól?' : 'Kdo přihrál?') : mode === 'own' ? 'Který náš hráč?' : (m.ours ? 'Číslo hráče soupeře' : 'Číslo střelce soupeře');
+  const sub = mode === 'scorer' && m.step === 1 ? 'Střelec: ' + (playerName(match, m.scorerId) || 'nezadán') : m.subtitle;
+  let body;
+  if (mode === 'scorer') body = playerGrid(m.step === 0 ? players : players.filter(p => p.id !== m.scorerId), m.step === 0 ? m.scorerId : m.assistInit);
+  else if (mode === 'own') body = playerGrid(players, m.scorerId);
+  else body = numpad(m.number);
+  const types = m.step === 0 ? chips(GOAL_TYPES.map(t => ({ v: t, label: goalTypeLabel(t, m.ours), on: m.gtype === t })), 'goalType') : '';
+  let right;
+  if (mode === 'scorer' && m.step === 0) right = '<button class="btn btn-text" data-a="goalNoScorer">Bez střelce</button>';
+  else if (mode === 'scorer') right = '<button class="btn btn-primary" data-a="goalNoAssist">Bez asistence</button>';
+  else if (mode === 'own') right = '<button class="btn btn-text" data-a="goalNoScorer">Nevím</button>';
+  else right = '<button class="btn btn-primary" data-primary data-a="goalSaveNumber">Uložit</button>';
+  const left = m.step === 0 ? `<button class="btn btn-text danger" data-a="goalDelete">${m.isNew ? 'Zrušit gól' : 'Smazat gól'}</button>` : '<button class="btn btn-text" data-a="goalBack">Zpět</button>';
+  return `<h2>${esc(title)}</h2><p class="sheet-sub">${esc(sub)}</p>${types}${body}
+    <div class="sheet-actions">${left}<span class="grow"></span>${right}</div>`;
+};
+
+MODALS.booking = m => {
+  const match = matchById(D, m.mid); if (!match) return '';
+  const players = match.players.slice().sort(playerOrder);
+  return `<h2 class="with-icon">${cardIcon(m.color, true)}<span>${cardLabel(m.color)}</span></h2>
+    <p class="sheet-sub">V ${minuteLabel(match, m.period, m.second * 1000)}</p>
+    ${chips([{ v: 'YELLOW', label: 'Žlutá', on: m.color === 'YELLOW' }, { v: 'RED', label: 'Červená', on: m.color === 'RED' }], 'bkColor')}
+    ${chips([{ v: '1', label: D.teamName, on: m.ours }, { v: '0', label: match.opponent, on: !m.ours }], 'bkTeam')}
+    ${m.ours ? playerGrid(players, m.playerId) : numpad(m.number)}
+    <div class="sheet-actions">${m.isNew ? '<button class="btn btn-text" data-a="closeModal">Zrušit</button>' : '<button class="btn btn-text danger" data-a="bkDelete">Smazat kartu</button>'}
+      <span class="grow"></span>${m.ours ? '<button class="btn btn-text" data-a="bkNoPlayer">Bez hráče</button>' : '<button class="btn btn-primary" data-primary data-a="bkSave">Uložit</button>'}</div>`;
+};
+
+MODALS.number = m => `<h2>${esc(m.title)}</h2><p class="sheet-sub">${esc(m.sub)}</p>${numpad(m.number)}
+  <div class="sheet-actions"><button class="btn btn-text" data-a="closeModal">Zrušit</button><span class="grow"></span>
+  <button class="btn btn-primary" data-primary data-a="numberSave">Uložit</button></div>`;
+
+MODALS.pitch = m => {
+  const match = matchById(D, m.mid); if (!match) return '';
+  const st = (label, k) => `<div class="stepper"><span class="stepper-label">${esc(label)}</span>
+    <button class="btn-round" data-a="pitchStep" data-k="${k}" data-d="-1" ${m[k] <= 0 ? 'disabled' : ''} aria-label="Ubrat">−</button>
+    <span class="stepper-val">${m[k]}</span>
+    <button class="btn-round" data-a="pitchStep" data-k="${k}" data-d="1" aria-label="Přidat">+</button></div>`;
+  const o = st(D.teamName, 'ours'), t = st(match.opponent, 'theirs');
+  return `<h2>Skóre na hřišti 2</h2><p class="sheet-sub">Výsledek zápasu je součet obou hřišť.</p>
+    ${match.home ? o + t : t + o}
+    ${match.secondPitch && m.allowRemove ? '<button class="btn btn-text danger" data-a="pitchRemove">Hraje se jen na jednom hřišti</button>' : ''}
+    <div class="sheet-actions"><button class="btn btn-text" data-a="closeModal">Zrušit</button><span class="grow"></span>
+    <button class="btn btn-primary" data-primary data-a="pitchSave">Uložit</button></div>`;
+};
+
+MODALS.copy = m => `<h2>${esc(m.title)}</h2><p class="sheet-sub">${esc(m.sub)}</p>
+  <textarea class="copy-area" readonly rows="10">${esc(m.text)}</textarea>
+  <div class="sheet-actions"><button class="btn btn-text" data-a="closeModal">Zavřít</button><span class="grow"></span>
+  <button class="btn btn-primary" data-a="copyText">Kopírovat</button></div>`;
+
+MODALS.importPreview = m => `<h2>Nahradit data zálohou?</h2>
+  <p>Záloha z ${esc(fmtDateTime(m.backup.exportedAt))} obsahuje: ${esc(dataSummary(m.data))}.</p>
+  <p>Současná data (${esc(dataSummary(D))}) budou nahrazena.</p>
+  <div class="sheet-actions"><button class="btn btn-text" data-a="closeModal">Zrušit</button><span class="grow"></span>
+  <button class="btn btn-danger" data-a="importConfirm">Importovat</button></div>`;
+
+function renderModal() {
+  const root = document.getElementById('modal-root');
+  if (!modal) { root.innerHTML = ''; document.body.classList.remove('locked'); return; }
+  let inner = '';
+  try { inner = MODALS[modal.type](modal); } catch (err) { console.error(err); inner = `<p>Dialog se nepodařilo zobrazit.</p><div class="sheet-actions"><button class="btn btn-text" data-a="closeModal">Zavřít</button></div>`; }
+  root.innerHTML = `<div class="scrim" data-a="closeModal"></div><div class="sheet" role="dialog" aria-modal="true">${inner}</div>`;
+  document.body.classList.add('locked');
+  if (modal.focus) {
+    const el = root.querySelector(modal.focus);
+    if (el) { try { el.focus({ preventScroll: true }); } catch (e) { /* nic */ } }
+    modal.focus = null;
+  }
+}
+
+// ================================================================ AKCE
+const A = {};
+const curMatch = () => matchById(D, cur().p.id);
+function persist() { saveLocal(Date.now()); Cloud.schedule(); }
+
+A.back = () => back();
+A.go = d => go(d.to, { id: d.id, sid: d.sid, tid: d.tid });
+A.openMatch = d => { const m = matchById(D, d.id); if (m) go(m.status === 'ACTIVE' ? 'match' : 'summary', { id: m.id }); };
+A.toggle = d => { const f = cur().f; f[d.k] = !f[d.k]; render(); };
+A.step = d => { const f = cur().f; f[d.k] = Math.min(Number(d.max), Math.max(Number(d.min), f[d.k] + Number(d.d))); render(); };
+A.closeModal = () => closeModal();
+A.modalYes = () => { const m = modal; modal = null; m.onYes(); };
+A.textSave = () => {
+  const v = String(modal.value || '').trim();
+  if (!v && !modal.allowEmpty) { toast('Vyplňte prosím text.'); return; }
+  const m = modal; modal = null; m.onSave(v, m);
+};
+
+// ---------- tým, sezóny
+A.editTeamName = () => openModal({
+  type: 'text', title: 'Název našeho týmu', label: 'Název týmu', value: D.teamName, focus: 'input',
+  onSave: v => { D.teamName = v; commit(); },
+});
+A.addSeason = () => {
+  const act = activeSeason(D);
+  openModal({
+    type: 'text', title: 'Nová sezóna', label: 'Název sezóny', value: '', yes: 'Založit', focus: 'input', archiveOld: true,
+    extra: m => (act ? `<label class="check-row"><input type="checkbox" data-in="m.archiveOld" ${m.archiveOld ? 'checked' : ''}>
+      <span>Archivovat dosavadní sezónu ${esc(act.name)}</span></label>` : ''),
+    onSave: (v, m) => {
+      if (act && m.archiveOld) act.archived = true;
+      const s = nSeason({ name: v });
+      D.seasons.push(s); D.activeSeasonId = s.id; commit();
+    },
+  });
+};
+A.setActiveSeason = d => { const s = seasonById(D, d.id); if (s && !s.archived) { D.activeSeasonId = s.id; commit(); } };
+A.editSeason = d => {
+  const s = seasonById(D, d.id); if (!s) return;
+  openModal({
+    type: 'text', title: 'Upravit sezónu', label: 'Název sezóny', value: s.name,
+    extra: () => `<div class="extra-actions">
+      <button class="btn btn-text" data-a="seasonArchive" data-id="${s.id}">${s.archived ? 'Obnovit sezónu z archivu' : 'Archivovat sezónu'}</button>
+      <button class="btn btn-text danger" data-a="seasonDelete" data-id="${s.id}">Smazat sezónu</button></div>`,
+    onSave: v => { s.name = v; commit(); },
+  });
+};
+function fixActiveSeason() {
+  if (!D.seasons.some(s => s.id === D.activeSeasonId && !s.archived)) {
+    const s = D.seasons.slice().reverse().find(x => !x.archived); D.activeSeasonId = s ? s.id : null;
+  }
+}
+A.seasonArchive = d => { const s = seasonById(D, d.id); if (!s) return; s.archived = !s.archived; fixActiveSeason(); modal = null; commit(); };
+A.seasonDelete = d => {
+  const s = seasonById(D, d.id); if (!s) return;
+  confirmModal(`Smazat sezónu ${s.name}?`, 'Smažou se všechny týmy, soupisky a zápasy této sezóny včetně archivu.', 'Smazat', () => {
+    D.seasons = D.seasons.filter(x => x.id !== s.id); D.matches = D.matches.filter(m => m.seasonId !== s.id);
+    fixActiveSeason(); commit();
+  });
+};
+
+// ---------- týmy
+A.addTeam = d => openModal({
+  type: 'text', title: 'Nový tým', label: 'Název týmu (např. Přípravka)', value: '', yes: 'Založit', focus: 'input', caps: 'words',
+  onSave: v => { const s = seasonById(D, d.sid); if (s) { s.teams.push(nTeam({ name: v })); commit(); } },
+});
+A.renameTeam = d => {
+  const t = teamById(D, d.sid, d.tid); if (!t) return;
+  openModal({ type: 'text', title: 'Přejmenovat tým', label: 'Název týmu', value: t.name, focus: 'input', onSave: v => { t.name = v; commit(); } });
+};
+A.deleteTeam = d => {
+  const s = seasonById(D, d.sid); const t = teamById(D, d.sid, d.tid); if (!s || !t) return;
+  const mc = D.matches.filter(m => m.seasonId === s.id && m.teamId === t.id).length;
+  confirmModal(`Smazat tým ${t.name}?`,
+    `Smaže se soupiska (${t.players.length} ${plural(t.players.length, 'hráč', 'hráči', 'hráčů')}) a ${mc} ${plural(mc, 'zápas', 'zápasy', 'zápasů')} tohoto týmu včetně archivu. Pokud si data chcete ponechat, udělejte si nejdřív export.`,
+    'Smazat tým', () => {
+      s.teams = s.teams.filter(x => x.id !== t.id);
+      D.matches = D.matches.filter(m => !(m.seasonId === s.id && m.teamId === t.id));
+      persist();
+      if (d.back) back(); else render();
+    });
+};
+
+// ---------- hráči
+A.addPlayer = d => openModal({ type: 'player', sid: d.sid, tid: d.tid, pid: null, name: '', number: '', focus: '#pname' });
+A.editPlayer = d => {
+  const t = teamById(D, d.sid, d.tid); const p = t && t.players.find(x => x.id === d.pid); if (!p) return;
+  openModal({ type: 'player', sid: d.sid, tid: d.tid, pid: p.id, name: p.name, number: p.number != null ? String(p.number) : '' });
+};
+A.playerSave = () => {
+  const m = modal; const t = teamById(D, m.sid, m.tid); if (!t) return closeModal();
+  const name = String(m.name || '').trim();
+  if (!name) { toast('Zadejte jméno hráče.'); return; }
+  const num = intOrNull(String(m.number || '').replace(/\D/g, ''));
+  if (m.pid) {
+    const p = t.players.find(x => x.id === m.pid);
+    if (p) { p.name = name; p.number = num; }
+    // do zápasů se promítne jen jméno, číslo dresu v zápase může být jiné
+    D.matches.forEach(x => { if (x.seasonId === m.sid && x.teamId === m.tid) x.players.forEach(pp => { if (pp.id === m.pid) pp.name = name; }); });
+    modal = null;
+  } else {
+    t.players.push(nPlayer({ name, number: num }));
+    Object.assign(m, { last: name, name: '', number: '', focus: '#pname' });
+  }
+  commit();
+};
+A.playerDelete = () => {
+  const m = modal; const t = teamById(D, m.sid, m.tid); const p = t && t.players.find(x => x.id === m.pid); if (!p) return;
+  confirmModal('Smazat hráče?', `${p.name} bude odebrán ze soupisky. Už odehrané zápasy zůstanou beze změny.`, 'Smazat', () => {
+    t.players = t.players.filter(x => x.id !== p.id); commit();
+  });
+};
+
+// ---------- nový zápas
+A.nmTeam = d => { const s = activeSeason(D); const t = s && s.teams.find(x => x.id === d.v); if (t) { initNewMatchTeam(cur().f, t); render(); } };
+A.nmHome = d => { cur().f.home = d.v === '1'; render(); };
+A.nmCat = d => { const c = CATEGORIES.find(x => x.t === d.v); if (!c) return; Object.assign(cur().f, { cat: c.t, periods: c.p, minutes: c.m }); render(); };
+A.nmAll = () => {
+  const f = cur().f; const s = activeSeason(D); const t = s && s.teams.find(x => x.id === f.teamId); if (!t) return;
+  f.selected = f.selected.length === t.players.length ? [] : t.players.map(p => p.id); render();
+};
+A.nmTogglePlayer = d => { const f = cur().f; f.selected = f.selected.includes(d.pid) ? f.selected.filter(x => x !== d.pid) : [...f.selected, d.pid]; render(); };
+A.nmNumber = d => {
+  const f = cur().f; const s = activeSeason(D); const t = s && s.teams.find(x => x.id === f.teamId);
+  const p = t && t.players.find(x => x.id === d.pid); if (!p) return;
+  openModal({
+    type: 'number', title: p.name, sub: 'Číslo dresu v tomto zápase. Soupiska týmu se nezmění.',
+    number: f.numbers[p.id] != null ? String(f.numbers[p.id]) : '',
+    onSave: n => { f.numbers[p.id] = n; render(); },
+  });
+};
+A.startMatch = () => {
+  const f = cur().f; const s = activeSeason(D); const t = s && s.teams.find(x => x.id === f.teamId);
+  if (!s || !t) return;
+  const opp = String(f.opponent || '').trim();
+  if (!opp) { toast('Nejdřív zadejte soupeře.'); const el = document.querySelector('[data-in="f.opponent"]'); if (el) el.focus(); return; }
+  const m = nMatch({
+    seasonId: s.id, teamId: t.id, opponent: opp, home: f.home, date: withDay(Date.now(), f.date),
+    categoryLabel: f.cat, periods: f.periods, periodMinutes: f.minutes, note: String(f.note || '').trim(),
+    players: t.players.filter(p => f.selected.includes(p.id)).map(p => ({ ...p, number: f.numbers[p.id] == null ? null : f.numbers[p.id] })),
+    secondPitch: f.twoPitches ? { ours: 0, theirs: 0, goals: [] } : null,
+  });
+  D.matches.push(m); D.lastTeamId = t.id;
+  Object.assign(t, { lastCategory: f.cat, lastPeriods: f.periods, lastPeriodMinutes: f.minutes });
+  persist();
+  replaceTop('match', { id: m.id });
+};
+
+// ---------- časomíra
+A.periodStart = () => { const m = curMatch(); if (!m) return; Object.assign(m, { periodStarted: true, periodEnded: false, elapsedMs: 0, runningSince: Date.now() }); commit(); };
+A.pause = () => { const m = curMatch(); if (!m || !isRunning(m)) return; m.elapsedMs = elapsedAt(m, Date.now()); m.runningSince = null; commit(); };
+A.resume = () => { const m = curMatch(); if (!m || isRunning(m)) return; m.runningSince = Date.now(); commit(); };
+A.periodNext = () => { const m = curMatch(); if (!m) return; Object.assign(m, { currentPeriod: m.currentPeriod + 1, periodStarted: true, periodEnded: false, elapsedMs: 0, runningSince: Date.now() }); commit(); };
+function finishMatch(m) {
+  m.elapsedMs = elapsedAt(m, Date.now()); m.runningSince = null; m.periodEnded = true; m.status = 'FINISHED';
+  persist(); replaceTop('summary', { id: m.id });
+}
+A.periodEnd = () => {
+  const m = curMatch(); if (!m) return;
+  if (isLast(m)) {
+    confirmModal('Ukončit zápas?', 'Časomíra se zastaví a zobrazí se výsledná statistika.', 'Ukončit zápas', () => finishMatch(m), false);
+  } else {
+    const n = m.currentPeriod;
+    confirmModal(`Ukončit ${n}. ${periodWord(m.periods, 'A')}?`, `Časomíra se zastaví. Další ${periodWord(m.periods, 'A')} zahájíte tlačítkem.`, 'Ukončit', () => {
+      m.elapsedMs = elapsedAt(m, Date.now()); m.runningSince = null; m.periodEnded = true; commit();
+    }, false);
+  }
+};
+A.finishNow = () => {
+  const m = curMatch(); if (!m) return; const [h, a] = score(m);
+  confirmModal('Ukončit zápas hned?', `Zápas skončí za stavu ${h}:${a} a zobrazí se výsledná statistika. Zbývající části se už nehrají.`, 'Ukončit zápas', () => finishMatch(m), false);
+};
+A.deleteMatch = d => {
+  const m = matchById(D, d.id); if (!m) return;
+  confirmModal('Smazat zápas?', `Zápas proti týmu ${m.opponent} včetně všech gólů a karet bude trvale smazán.`, 'Smazat', () => {
+    D.matches = D.matches.filter(x => x.id !== m.id); persist(); back();
+  });
+};
+A.archive = d => { const m = matchById(D, d.id); if (!m) return; m.status = 'ARCHIVED'; commit(); toast('Uloženo v archivu.'); };
+
+// ---------- góly
+function nowPos(m) { return { period: m.currentPeriod, second: Math.floor(elapsedAt(m, Date.now()) / 1000) }; }
+A.goal = d => {
+  const m = curMatch(); if (!m) return;
+  const ours = d.ours === '1';
+  const g = nGoal({ ours, ...nowPos(m) });
+  m.goals.push(g);
+  modal = goalModal(m, g, false, true);
+  commit();
+};
+function goalModal(m, g, pitch, isNew) {
+  const ours = pitch ? true : g.ours;
+  return {
+    type: 'goal', mid: m.id, gid: g.id, pitch, isNew, ours, gtype: g.type, step: 0,
+    scorerId: g.scorerId, assistInit: g.assistId, number: g.opponentNumber != null ? String(g.opponentNumber) : '',
+    subtitle: pitch ? 'Gól na hřišti 2' : `${ours ? 'Gól ' + D.teamName : 'Gól soupeře'} v ${evMinute(m, g)}`,
+  };
+}
+A.editGoal = d => { const m = curMatch(); const g = m && m.goals.find(x => x.id === d.id); if (g) openModal(goalModal(m, g, false, false)); };
+A.editPitchGoal = d => { const m = curMatch(); const g = m && pitchGoals(m).find(x => x.id === d.id); if (g) openModal(goalModal(m, g, true, false)); };
+A.goalType = d => { modal.gtype = d.v; modal.step = 0; renderModal(); };
+A.goalBack = () => { modal.step = 0; renderModal(); };
+function goalTarget(m) {
+  const match = matchById(D, m.mid); if (!match) return null;
+  return m.pitch ? pitchGoals(match).find(x => x.id === m.gid) : match.goals.find(x => x.id === m.gid);
+}
+function goalSave(scorer, assist) {
+  const m = modal; const g = goalTarget(m); if (!g) return closeModal();
+  const mode = goalMode(m);
+  g.type = m.gtype;
+  g.scorerId = mode === 'number' ? null : scorer;
+  g.assistId = mode === 'scorer' ? assist : null;
+  g.opponentNumber = mode === 'number' ? intOrNull(m.number) : null;
+  modal = null; commit();
+}
+A.pickPlayer = d => {
+  if (!modal) return;
+  if (modal.type === 'booking') return bookingSave(d.pid);
+  const mode = goalMode(modal);
+  if (mode === 'scorer') {
+    if (modal.step === 0) { modal.scorerId = d.pid; modal.step = 1; renderModal(); } else goalSave(modal.scorerId, d.pid);
+  } else if (mode === 'own') goalSave(d.pid, null);
+};
+A.goalNoScorer = () => goalSave(null, null);
+A.goalNoAssist = () => goalSave(modal.scorerId, null);
+A.goalSaveNumber = () => goalSave(null, null);
+A.goalDelete = () => {
+  const m = modal; const match = matchById(D, m.mid); if (!match) return closeModal();
+  const del = () => {
+    if (m.pitch) {
+      const rest = pitchGoals(match).filter(x => x.id !== m.gid);
+      match.secondPitch = { ...match.secondPitch, ours: rest.length, goals: rest };
+    } else match.goals = match.goals.filter(x => x.id !== m.gid);
+    modal = null; commit();
+  };
+  if (m.isNew) del(); else confirmModal('Smazat gól?', `${m.subtitle}: gól bude odstraněn ze zápisu.`, 'Smazat', del);
+};
+A.np = d => {
+  if (!modal) return; let v = String(modal.number || '');
+  if (d.k === 'C') v = ''; else if (d.k === '⌫') v = v.slice(0, -1); else if (v.length < 2) v += d.k;
+  modal.number = v; renderModal();
+};
+A.numberSave = () => { const m = modal; modal = null; m.onSave(intOrNull(m.number)); };
+
+// ---------- karty
+A.card = d => {
+  const m = curMatch(); if (!m) return;
+  openModal({ type: 'booking', mid: m.id, bid: null, isNew: true, color: d.c, ours: true, playerId: null, number: '', ...nowPos(m) });
+};
+A.editCard = d => {
+  const m = curMatch(); const c = m && m.cards.find(x => x.id === d.id); if (!c) return;
+  openModal({ type: 'booking', mid: m.id, bid: c.id, isNew: false, color: c.color, ours: c.ours, playerId: c.playerId, number: c.opponentNumber != null ? String(c.opponentNumber) : '', period: c.period, second: c.second });
+};
+A.bkColor = d => { modal.color = d.v; renderModal(); };
+A.bkTeam = d => { modal.ours = d.v === '1'; renderModal(); };
+function bookingSave(pid) {
+  const m = modal; const match = matchById(D, m.mid); if (!match) return closeModal();
+  const b = nBooking({ id: m.bid || uid(), ours: m.ours, color: m.color, period: m.period, second: m.second, playerId: m.ours ? pid : null, opponentNumber: m.ours ? null : intOrNull(m.number) });
+  const i = match.cards.findIndex(x => x.id === b.id);
+  if (i >= 0) match.cards[i] = b; else match.cards.push(b);
+  modal = null; commit();
+}
+A.bkNoPlayer = () => bookingSave(null);
+A.bkSave = () => bookingSave(null);
+A.bkDelete = () => {
+  const m = modal; const match = matchById(D, m.mid); if (!match) return closeModal();
+  confirmModal('Smazat kartu?', 'Karta bude odstraněna ze zápisu.', 'Smazat', () => { match.cards = match.cards.filter(x => x.id !== m.bid); commit(); });
+};
+
+// ---------- druhé hřiště, poznámka, datum, čísla
+A.secondPitch = () => {
+  const m = curMatch(); if (!m) return;
+  const sp = m.secondPitch || { ours: 0, theirs: 0 };
+  openModal({ type: 'pitch', mid: m.id, ours: sp.ours, theirs: sp.theirs, allowRemove: cur().name === 'summary' });
+};
+A.pitchStep = d => { modal[d.k] = Math.max(0, Math.min(99, modal[d.k] + Number(d.d))); renderModal(); };
+A.pitchSave = () => {
+  const m = modal; const match = matchById(D, m.mid); if (!match) return closeModal();
+  match.secondPitch = normalizePitch({ ours: m.ours, theirs: m.theirs, goals: match.secondPitch ? match.secondPitch.goals : [] });
+  modal = null; commit();
+};
+A.pitchRemove = () => { const match = matchById(D, modal.mid); if (match) match.secondPitch = null; modal = null; commit(); };
+A.editNote = () => {
+  const m = curMatch(); if (!m) return;
+  openModal({ type: 'text', title: 'Poznámka k zápasu', label: 'Poznámka', value: m.note, multiline: true, allowEmpty: true, placeholder: 'Např. hřiště, počasí, výkon týmu…', focus: 'textarea', onSave: v => { m.note = v; commit(); } });
+};
+A.lineupNumber = d => {
+  const m = curMatch(); const p = m && m.players.find(x => x.id === d.pid); if (!p) return;
+  openModal({ type: 'number', title: p.name, sub: 'Číslo dresu v tomto zápase. Soupiska týmu se nezmění.', number: p.number != null ? String(p.number) : '', onSave: n => { p.number = n; commit(); } });
+};
+
+// ---------- sdílení
+A.share = async d => {
+  const m = matchById(D, d.id); if (!m) return;
+  const text = shareText(m, D.teamName, teamLabel(D, m));
+  try { if (navigator.share) { await navigator.share({ text }); return; } } catch (e) { if (e && e.name === 'AbortError') return; }
+  try { await navigator.clipboard.writeText(text); toast('Výsledek je zkopírovaný, vložte ho do zprávy.'); return; } catch (e) { /* další možnost */ }
+  openModal({ type: 'copy', title: 'Sdílet výsledek', sub: 'Text zkopírujte a vložte do zprávy.', text });
+};
+A.copyText = () => {
+  const ta = document.querySelector('.copy-area'); if (!ta) return;
+  ta.select();
+  const done = () => toast('Zkopírováno.');
+  if (navigator.clipboard) navigator.clipboard.writeText(ta.value).then(done, () => { try { document.execCommand('copy'); done(); } catch (e) { toast('Označte text a zkopírujte ho ručně.'); } });
+  else { try { document.execCommand('copy'); done(); } catch (e) { toast('Označte text a zkopírujte ho ručně.'); } }
+};
+
+// ---------- filtry, kalendář
+A.fSeason = d => { const f = cur().f; f.sid = d.v; f.tid = null; render(); };
+A.fTeam = d => { cur().f.tid = d.v || null; render(); };
+A.calDay = d => { const f = cur().f; f.sel = f.sel === d.k ? null : d.k; render(); };
+A.calMove = d => { const f = cur().f; const x = new Date(f.y, f.m + Number(d.d), 1); f.y = x.getFullYear(); f.m = x.getMonth(); f.sel = null; render(); };
+A.calToday = () => { const f = cur().f; const n = new Date(); f.y = n.getFullYear(); f.m = n.getMonth(); f.sel = null; render(); };
+
+// ---------- export a import
+A.exportData = async () => {
+  const json = JSON.stringify({ format: 'goly-zaloha', version: 1, exportedAt: Date.now(), data: D });
+  const name = `goly-zaloha-${dayKey(Date.now())}.json`;
+  if (Caps.downloads) {
+    try { await Caps.downloads.save({ filename: name, data: json }); toast('Záloha je uložená.'); return; }
+    catch (e) { if (e && e.code === 'declined') return; }
+  }
+  if (!window.claude) {
+    // na telefonu nabídne systémové sdílení (Uložit do souborů, Disk Google, e-mail…)
+    try {
+      const file = new File([json], name, { type: 'application/json' });
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: name });
+        toast('Záloha je připravená.'); return;
+      }
+    } catch (e) { if (e && e.name === 'AbortError') return; }
+    try {
+      const url = URL.createObjectURL(new Blob([json], { type: 'application/json' }));
+      const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 5000); toast('Záloha se stahuje.'); return;
+    } catch (e) { /* zobrazit text */ }
+  }
+  openModal({ type: 'copy', title: 'Záloha dat', sub: 'Soubor se nepodařilo uložit. Zkopírujte text zálohy a uložte si ho, nebo ho vložte do jiného zařízení.', text: json });
+};
+A.pickImport = () => { const el = document.getElementById('importFile'); if (el) { el.value = ''; el.click(); } };
+A.pasteImport = () => openModal({
+  type: 'text', title: 'Vložit zálohu', label: 'Text zálohy', value: '', multiline: true, yes: 'Načíst', placeholder: '{"format":"goly-zaloha", …}',
+  onSave: v => readBackup(v),
+});
+function readBackup(text) {
+  try {
+    const b = JSON.parse(text);
+    if (!b || b.format !== 'goly-zaloha' || !b.data) throw new Error('format');
+    openModal({ type: 'importPreview', backup: { exportedAt: int(b.exportedAt) }, data: migrate(nData(b.data)) });
+  } catch (e) {
+    modal = null; render();
+    toast('Soubor nejde načíst. Vyberte zálohu vytvořenou touto aplikací (soubor .json).');
+  }
+}
+A.importConfirm = () => {
+  try { localStorage.setItem('goly-pred-importem', JSON.stringify(D)); } catch (e) { /* bez zálohy */ }
+  D = modal.data; modal = null;
+  commit(); toast('Data ze zálohy jsou načtena.');
+};
+
+// ================================================================ VYKRESLENÍ A UDÁLOSTI
+const app = document.getElementById('app');
+function render() {
+  const c = cur(); let html;
+  try { html = (SCREENS[c.name] || SCREENS.home)(c.p, c.f); }
+  catch (err) { console.error(err); html = topbar('Chyba') + `<main class="wrap"><p>Obrazovku se nepodařilo zobrazit: ${esc(err.message)}</p></main>`; }
+  app.innerHTML = html;
+  renderModal();
+  wantWake(c.name === 'match');
+}
+
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-a]');
+  if (!el || el.disabled) return;
+  const fn = A[el.dataset.a];
+  if (fn) { e.preventDefault(); e.stopPropagation(); fn(el.dataset, el); }
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && modal) { closeModal(); return; }
+  const t = e.target;
+  if ((e.key === 'Enter' || e.key === ' ') && t.getAttribute && t.getAttribute('role') === 'button' && t.dataset.a) { e.preventDefault(); t.click(); return; }
+  if (e.key === 'Enter' && modal && t.tagName === 'INPUT') {
+    const p = document.querySelector('#modal-root [data-primary]'); if (p) { e.preventDefault(); p.click(); }
+  }
+});
+function setDraft(el) {
+  const [scope, k] = el.dataset.in.split('.');
+  const v = el.type === 'checkbox' ? el.checked : el.value;
+  if (scope === 'm' && modal) modal[k] = v; else if (scope === 'f') cur().f[k] = v;
+}
+document.addEventListener('input', e => { if (e.target.dataset && e.target.dataset.in) setDraft(e.target); });
+document.addEventListener('change', e => {
+  const el = e.target;
+  if (el.dataset && el.dataset.in) setDraft(el);
+  if (el.dataset && el.dataset.change === 'matchDate') {
+    const m = matchById(D, el.dataset.id); if (m && el.value) { m.date = withDay(m.date, el.value); commit(); }
+  }
+  if (el.id === 'importFile' && el.files && el.files[0]) {
+    const r = new FileReader();
+    r.onload = () => readBackup(String(r.result || ''));
+    r.onerror = () => toast('Soubor se nepodařilo přečíst.');
+    r.readAsText(el.files[0]);
+  }
+});
+
+// ---------------------------------------------------------------- časomíra, vibrace, displej
+const vibrated = new Set();
+function tick() {
+  const c = cur(); if (c.name !== 'match') return;
+  const m = matchById(D, c.p.id); const el = document.getElementById('clock'); if (!m || !el) return;
+  const e = elapsedAt(m, Date.now()); const lim = m.periodMinutes * 60000;
+  const over = m.periodStarted && !m.periodEnded && e >= lim;
+  el.textContent = formatClock(e);
+  document.getElementById('clockpanel').classList.toggle('over', over);
+  document.getElementById('clocksub').textContent = over ? `Nastavený čas +${formatClock(e - lim)}` : `z ${formatClock(lim)}, hraje se ${formatLabel(m)}`;
+  const key = m.id + ':' + m.currentPeriod;
+  if (over && isRunning(m) && !vibrated.has(key)) {
+    vibrated.add(key);
+    try { if (navigator.vibrate) navigator.vibrate([500, 250, 500, 250, 500]); } catch (err) { /* bez vibrace */ }
+    toast('Uplynula základní hrací doba.');
+  }
+}
+let wakeLock = null;
+async function wantWake(on) {
+  try {
+    if (on && !wakeLock && navigator.wakeLock && document.visibilityState === 'visible') {
+      wakeLock = await navigator.wakeLock.request('screen');
+      wakeLock.addEventListener('release', () => { wakeLock = null; });
+    } else if (!on && wakeLock) { const w = wakeLock; wakeLock = null; await w.release(); }
+  } catch (e) { wakeLock = null; }
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') { wantWake(cur().name === 'match'); tick(); Cloud.pull(false); }
+});
+
+// ---------------------------------------------------------------- start
+try { history.replaceState({ depth: 1 }, ''); } catch (e) { useHistory = false; }
+render();
+setInterval(tick, 250);
+Cloud.init();
+
+// ---------------------------------------------------------------- provoz bez internetu
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
+}
+try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) { /* nepodporováno */ }
+</script>
+</body>
+</html>
